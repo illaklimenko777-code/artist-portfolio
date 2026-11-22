@@ -1,0 +1,714 @@
+---
+import instagramIcon from "../../assets/img/instagram-image.png";
+import logo from "../../assets/img/logo.png";
+
+---
+
+	<header class="site-header" id="top">
+		<div class="header-inner">
+			<div class="brand">
+				<a
+					class="brand-logo-link"
+					href="#works"
+					aria-label="Олександра Глущенко — головна"
+					data-aria-uk="Олександра Глущенко — головна"
+					data-aria-en="Alexandra Hlushchenko — home"
+				>
+					<img class="brand-logo" src={logo.src} alt="" />
+				</a>
+				<span class="brand-copy">
+					<a class="brand-name" href="#works" data-uk="ОЛЕКСАНДРА ГЛУЩЕНКО" data-en="ALEXANDRA HLUSHCHENKO">
+						ОЛЕКСАНДРА ГЛУЩЕНКО
+					</a>
+					<a
+						class="instagram"
+						href="https://www.instagram.com/a.h.mystery.art?stkn=cTEzYWI0YzFvZGtl"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<img src={instagramIcon.src} alt="" />
+						a.h.mystery.art
+					</a>
+				</span>
+			</div>
+
+			<button
+				class="menu-toggle"
+				type="button"
+				aria-label="Відкрити меню"
+				data-aria-uk="Відкрити меню"
+				data-aria-en="Open menu"
+				aria-expanded="false"
+				aria-controls="mobile-menu"
+			>
+				<span class="menu-toggle-label" data-uk="МЕНЮ" data-en="MENU">МЕНЮ</span>
+				<span class="menu-toggle-icon" aria-hidden="true">
+					<span></span>
+					<span></span>
+					<span></span>
+				</span>
+			</button>
+
+			<nav
+				class="main-nav"
+				aria-label="Головна навігація"
+				data-aria-uk="Головна навігація"
+				data-aria-en="Main navigation"
+			>
+				<a href="#top" aria-current="location" data-uk="ГОЛОВНА" data-en="HOME">ГОЛОВНА</a>
+				<a href="#work-section" data-uk="РОБОТИ" data-en="WORKS">РОБОТИ</a>
+				<a href="#projects" data-uk="ПРОЄКТИ" data-en="PROJECTS">ПРОЄКТИ</a>
+				<a href="#bio" data-uk="БІОГРАФІЯ" data-en="BIOGRAPHY">БІОГРАФІЯ</a>
+				<a href="#contacts" data-uk="КОНТАКТИ" data-en="CONTACTS">КОНТАКТИ</a>
+			</nav>
+
+			<div class="language-switch" aria-label="Мова" data-aria-uk="Мова" data-aria-en="Language">
+				<button class="language-button" type="button" data-language="uk" aria-label="Українська" aria-pressed="true">UA</button>
+				<span aria-hidden="true">/</span>
+				<button type="button" data-language="en" aria-label="English" aria-pressed="false">EN</button>
+			</div>
+		</div>
+
+		<div
+			class="mobile-menu"
+			id="mobile-menu"
+			role="dialog"
+			aria-modal="true"
+			aria-label="Меню"
+			data-aria-uk="Меню"
+			data-aria-en="Menu"
+			hidden
+		>
+			<div class="mobile-menu-header">
+				<a class="mobile-menu-brand" href="#top">
+					<img src={logo.src} alt="" />
+					<span>
+						<strong data-uk="ОЛЕКСАНДРА ГЛУЩЕНКО" data-en="ALEXANDRA HLUSHCHENKO">ОЛЕКСАНДРА ГЛУЩЕНКО</strong>
+						<small>a.h.mystery.art</small>
+					</span>
+				</a>
+				<button
+					class="mobile-menu-close"
+					type="button"
+					aria-label="Закрити меню"
+					data-aria-uk="Закрити меню"
+					data-aria-en="Close menu"
+				>
+					<span data-uk="ЗАКРИТИ" data-en="CLOSE">ЗАКРИТИ</span>
+				</button>
+			</div>
+
+			<nav
+				class="mobile-menu-nav"
+				aria-label="Мобільна навігація"
+				data-aria-uk="Мобільна навігація"
+				data-aria-en="Mobile navigation"
+			>
+				<a href="#top"><span>01</span><span data-uk="Головна" data-en="Home">Головна</span></a>
+				<a href="#work-section"><span>02</span><span data-uk="Роботи" data-en="Works">Роботи</span></a>
+				<a href="#projects"><span>03</span><span data-uk="Проєкти" data-en="Projects">Проєкти</span></a>
+				<a href="#bio"><span>04</span><span data-uk="Біографія" data-en="Biography">Біографія</span></a>
+				<a href="#contacts"><span>05</span><span data-uk="Контакти" data-en="Contacts">Контакти</span></a>
+			</nav>
+
+			<div class="mobile-language-switch" aria-label="Мова" data-aria-uk="Мова" data-aria-en="Language">
+				<button type="button" data-language="uk" aria-label="Українська" aria-pressed="true">UA</button>
+				<span aria-hidden="true">/</span>
+				<button type="button" data-language="en" aria-label="English" aria-pressed="false">EN</button>
+			</div>
+		</div>
+	</header>
+
+<script>
+	const supportedLanguages = ["uk", "en"] as const;
+	type Language = (typeof supportedLanguages)[number];
+
+	const params = new URLSearchParams(window.location.search);
+	const requestedLanguage = params.get("lang");
+	const savedLanguage = localStorage.getItem("portfolio-language");
+	const initialLanguage: Language =
+		supportedLanguages.find((language) => language === requestedLanguage) ??
+		supportedLanguages.find((language) => language === savedLanguage) ??
+		"uk";
+
+	function applyLanguage(language: Language) {
+		document.documentElement.lang = language;
+		localStorage.setItem("portfolio-language", language);
+
+		document.querySelectorAll<HTMLElement>("[data-uk][data-en]").forEach((element) => {
+			element.textContent = element.dataset[language] ?? "";
+		});
+
+		document.querySelectorAll<HTMLElement>("[data-aria-uk][data-aria-en]").forEach((element) => {
+			const key = language === "uk" ? "ariaUk" : "ariaEn";
+			element.setAttribute("aria-label", element.dataset[key] ?? "");
+		});
+
+		document.querySelectorAll<HTMLImageElement>("[data-alt-uk][data-alt-en]").forEach((image) => {
+			image.alt = language === "uk" ? image.dataset.altUk ?? "" : image.dataset.altEn ?? "";
+		});
+
+		document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("[data-placeholder-uk][data-placeholder-en]").forEach((field) => {
+			field.placeholder = language === "uk" ? field.dataset.placeholderUk ?? "" : field.dataset.placeholderEn ?? "";
+		});
+
+		document.querySelectorAll<HTMLButtonElement>("[data-language]").forEach((button) => {
+			button.setAttribute("aria-pressed", String(button.dataset.language === language));
+		});
+		document.title =
+			language === "uk"
+				? "Олександра Глущенко — сучасна художниця"
+				: "Alexandra Hlushchenko — Contemporary Artist";
+	}
+
+	applyLanguage(initialLanguage);
+
+	document.querySelectorAll<HTMLAnchorElement>("[data-placeholder-link]").forEach((link) => {
+		link.addEventListener("click", (event) => event.preventDefault());
+	});
+
+	document.querySelectorAll<HTMLButtonElement>("[data-language]").forEach((button) => {
+		button.addEventListener("click", () => {
+			const language = button.dataset.language;
+			if (language === "uk" || language === "en") {
+				applyLanguage(language);
+				closeMobileMenu();
+			}
+		});
+	});
+
+	const menuToggle = document.querySelector<HTMLButtonElement>(".menu-toggle");
+	const mobileMenu = document.querySelector<HTMLElement>("#mobile-menu");
+	const mobileMenuClose = mobileMenu?.querySelector<HTMLButtonElement>(".mobile-menu-close");
+
+	function closeMobileMenu() {
+		if (!menuToggle || !mobileMenu) return;
+		mobileMenu.hidden = true;
+		menuToggle.setAttribute("aria-expanded", "false");
+		document.body.classList.remove("mobile-menu-open");
+		document.documentElement.classList.remove("mobile-menu-open");
+	}
+
+	menuToggle?.addEventListener("click", () => {
+		if (!mobileMenu) return;
+		mobileMenu.hidden = false;
+		menuToggle.setAttribute("aria-expanded", "true");
+		document.body.classList.add("mobile-menu-open");
+		document.documentElement.classList.add("mobile-menu-open");
+	});
+
+	mobileMenuClose?.addEventListener("click", closeMobileMenu);
+	mobileMenu?.querySelectorAll<HTMLAnchorElement>("a").forEach((link) => {
+		link.addEventListener("click", closeMobileMenu);
+	});
+	document.addEventListener("keydown", (event) => {
+		if (event.key === "Escape") closeMobileMenu();
+	});
+
+	const sectionLinks = document.querySelectorAll<HTMLAnchorElement>(".main-nav a[href^='#']");
+	const sectionObserver = new IntersectionObserver(
+		(entries) => {
+			const visibleSection = entries.find((entry) => entry.isIntersecting);
+			if (!visibleSection) return;
+
+			sectionLinks.forEach((link) => {
+				if (link.hash === `#${visibleSection.target.id}`) {
+					link.setAttribute("aria-current", "location");
+				} else {
+					link.removeAttribute("aria-current");
+				}
+			});
+		},
+		{ rootMargin: "-35% 0px -55% 0px" },
+	);
+
+	sectionLinks.forEach((link) => {
+		const section = document.querySelector<HTMLElement>(link.hash);
+		if (!section) return;
+
+		sectionObserver.observe(section);
+		link.addEventListener("click", (event) => {
+			sectionLinks.forEach((sectionLink) => sectionLink.removeAttribute("aria-current"));
+			link.setAttribute("aria-current", "location");
+
+			if (link.hash === "#top") {
+				event.preventDefault();
+				window.scrollTo({ top: 0, behavior: "auto" });
+			}
+		});
+	});
+
+	if (requestedLanguage === "uk" || requestedLanguage === "en") {
+		window.history.replaceState({}, "", window.location.pathname);
+	}
+</script>
+
+<style>
+	:global(html) {
+		scroll-behavior: smooth;
+	}
+
+	:global(html.mobile-menu-open),
+	:global(body.mobile-menu-open) {
+		overflow: hidden;
+	}
+
+	.site-header {
+		position: sticky;
+		top: 0;
+		z-index: 10;
+		width: 100%;
+		background: #fff;
+		color: #111111;
+		font-family: "Inter", Arial, sans-serif;
+	}
+
+	.header-inner {
+		display: flex;
+		width: min(100% - 64px, 1120px);
+		min-height: 76px;
+		align-items: center;
+		justify-content: space-between;
+		gap: 28px;
+		margin: 0 auto;
+		border-bottom: 1px solid #e6e6e6;
+	}
+
+	.brand {
+		display: flex;
+		min-width: 250px;
+		align-items: center;
+		gap: 12px;
+	}
+
+	.brand-logo-link {
+		display: flex;
+		align-items: center;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.brand-copy {
+		display: flex;
+		flex-direction: column;
+		gap: 3px;
+	}
+
+	.brand-name {
+		font-family: "Lora", Georgia, serif;
+		font-size: 26px;
+		font-weight: 400;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		white-space: nowrap;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.brand-logo {
+		display: block;
+		width: 40px;
+		height: 40px;
+		object-fit: contain;
+	}
+
+	/* Keep the Instagram label outside the home links. */
+	.instagram {
+		position: relative;
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		color: #6E6E6E;
+		font-size: 11px;
+		text-decoration: none;
+		font-family: "Inter", Arial, sans-serif;
+		transition: color 260ms ease;
+	}
+
+	.instagram::after {
+		position: absolute;
+		right: 0;
+		bottom: -2px;
+		left: 17px;
+		height: 1px;
+		background: currentColor;
+		content: "";
+		opacity: 0.5;
+		transform: scaleX(0);
+		transform-origin: left center;
+		transition: transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1), opacity 320ms ease;
+	}
+
+	.instagram:hover,
+	.instagram:focus-visible {
+		color: #111111;
+	}
+
+	.instagram:hover::after,
+	.instagram:focus-visible::after {
+		opacity: 0.75;
+		transform: scaleX(1);
+	}
+
+	.instagram img {
+		width: 13px;
+		height: 13px;
+		object-fit: contain;
+	}
+
+	.main-nav {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: clamp(14px, 2.2vw, 32px);
+	}
+
+	.main-nav a {
+		position: relative;
+		padding: 8px 0;
+		color: #6E6E6E;
+		font-family: "Inter", Arial, sans-serif;
+		font-size: 12px;
+		text-transform: uppercase;
+		letter-spacing: 0.15em;
+		text-decoration: none;
+		white-space: nowrap;
+		transition: color 180ms ease;
+	}
+
+	.main-nav a::after {
+		position: absolute;
+		right: 0;
+		bottom: 3px;
+		left: 0;
+		height: 1px;
+		background: currentColor;
+		content: "";
+		transform: scaleX(0);
+		transform-origin: center;
+		transition: transform 220ms ease;
+	}
+
+	.main-nav a:hover,
+	.main-nav a:focus-visible {
+		color: #111111;
+	}
+
+	.main-nav a:hover::after,
+	.main-nav a:focus-visible::after,
+	.main-nav a[aria-current="location"]::after {
+		transform: scaleX(1);
+	}
+
+	.main-nav a[aria-current="location"] {
+		color: #111111;
+	}
+
+	.language-switch {
+		display: flex;
+		align-items: center;
+		gap: 7px;
+		padding-left: 18px;
+		border-left: 1px solid #e6e6e6;
+		font-size: 10px;
+	}
+
+	.language-switch button {
+		padding: 6px 0;
+		border: 0;
+		background: transparent;
+		color: #6E6E6E;
+		font: inherit;
+		cursor: pointer;
+		font-family: "Inter", Arial, sans-serif;
+		font-size: 11px;
+	}
+
+	.language-switch button[aria-pressed="true"] {
+		color: #111111;
+		text-decoration: underline;
+		text-underline-offset: 4px;
+		font-weight: bold;
+		font-family: "Inter", Arial, sans-serif;
+		font-size: 11px;
+	}
+
+	.menu-toggle {
+		display: none;
+		width: auto;
+		height: 34px;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		padding: 6px;
+		border: 0;
+		background: transparent;
+		cursor: pointer;
+	}
+
+	.menu-toggle-label {
+		color: #6e6e6e;
+		font-family: "Inter", Arial, sans-serif;
+		font-size: 8px;
+		letter-spacing: 0.04em;
+	}
+
+	.menu-toggle-icon {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+	}
+
+	.menu-toggle-icon span {
+		display: block;
+		width: 19px;
+		height: 1px;
+		background: #111111;
+	}
+
+	.mobile-menu {
+		display: none;
+	}
+
+	.mobile-menu[hidden] {
+		display: none !important;
+	}
+
+	:global(main) {
+		width: min(100% - 64px, 1120px);
+		margin: 0 auto;
+		color: #111111;
+		font-family: "Inter", Arial, sans-serif;
+	}
+
+	h2 {
+		font-family: "Inter", Arial, sans-serif;
+		font-weight: 400;
+		font-size: 12px;
+	}
+
+	@media (max-width: 900px) {
+		.header-inner {
+			width: min(100% - 40px, 720px);
+			flex-wrap: wrap;
+			gap: 12px 20px;
+			padding: 16px 0 12px;
+		}
+
+		:global(main) {
+			width: min(100% - 40px, 720px);
+		}
+
+		.brand {
+			min-width: 0;
+			margin-right: auto;
+		}
+
+		.main-nav {
+			order: 1;
+			width: 100%;
+			justify-content: space-between;
+			gap: 12px;
+			overflow-x: auto;
+		}
+
+		.language-switch {
+			padding-left: 12px;
+		}
+	}
+
+	@media (max-width: 700px) {
+		:global(main) {
+			width: calc(100% - 40px);
+		}
+
+	}
+
+	@media (max-width: 480px) {
+		.header-inner,
+		:global(main) {
+			width: calc(100% - 32px);
+		}
+
+		.header-inner {
+			min-height: 64px;
+			flex-wrap: nowrap;
+			gap: 12px;
+			padding: 0;
+		}
+
+		.brand-name {
+			font-size: 13px;
+		}
+
+		.brand-logo {
+			width: 32px;
+			height: 32px;
+		}
+
+		.main-nav,
+		.header-inner > .language-switch {
+			display: none;
+		}
+
+		.brand-copy .instagram {
+			display: flex;
+			gap: 0;
+			font-size: 8px;
+		}
+
+		.brand-copy .instagram img,
+		.brand-copy .instagram::after {
+			display: none;
+		}
+
+		.menu-toggle {
+			display: flex;
+		}
+
+		.mobile-menu {
+			position: fixed;
+			z-index: 20;
+			inset: 0;
+			display: flex;
+			flex-direction: column;
+			overflow-y: auto;
+			overscroll-behavior: contain;
+			padding: 22px 24px 28px;
+			background: #fff;
+			color: #111111;
+			font-family: "Inter", Arial, sans-serif;
+		}
+
+		.mobile-menu-header {
+			display: flex;
+			min-height: 42px;
+			align-items: center;
+			justify-content: space-between;
+			padding-bottom: 18px;
+			border-bottom: 1px solid #e6e6e6;
+		}
+
+		.mobile-menu-brand {
+			display: flex;
+			align-items: center;
+			gap: 9px;
+			color: inherit;
+			text-decoration: none;
+		}
+
+		.mobile-menu-brand img {
+			width: 27px;
+			height: 27px;
+			object-fit: contain;
+		}
+
+		.mobile-menu-brand span {
+			display: flex;
+			flex-direction: column;
+			gap: 3px;
+		}
+
+		.mobile-menu-brand strong {
+			font-family: "Lora", Georgia, serif;
+			font-size: 10px;
+			font-weight: 400;
+			letter-spacing: 0.04em;
+		}
+
+		.mobile-menu-brand small {
+			color: #6e6e6e;
+			font-size: 8px;
+			letter-spacing: 0.08em;
+		}
+
+		.mobile-menu-close {
+			display: flex;
+			align-items: center;
+			padding: 7px 0 7px 8px;
+			border: 0;
+			background: transparent;
+			color: #111111;
+			font: inherit;
+			font-size: 7px;
+			letter-spacing: 0.04em;
+			cursor: pointer;
+		}
+
+		.mobile-menu-close:hover,
+		.mobile-menu-close:focus-visible {
+			border-color: #111111;
+			background: #111111;
+			color: #fff;
+		}
+
+		.mobile-menu-nav {
+			display: flex;
+			flex-direction: column;
+			margin-top: 24px;
+		}
+
+		.mobile-menu-nav a {
+			display: grid;
+			grid-template-columns: 30px 1fr;
+			align-items: center;
+			padding: 15px 0;
+			border-bottom: 1px solid #e6e6e6;
+			color: #111111;
+			font-family: "Lora", Georgia, serif;
+			font-size: 20px;
+			text-decoration: none;
+		}
+
+		.mobile-menu-nav a span:first-child {
+			color: #6e6e6e;
+			font-family: "Inter", Arial, sans-serif;
+			font-size: 7px;
+		}
+
+		.mobile-language-switch {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			margin-top: auto;
+			padding-top: 18px;
+			border-top: 1px solid #e6e6e6;
+			font-size: 10px;
+		}
+
+		.mobile-language-switch button {
+			padding: 5px 0;
+			border: 0;
+			background: transparent;
+			color: #6e6e6e;
+			font: inherit;
+			cursor: pointer;
+		}
+
+		.mobile-language-switch button[aria-pressed="true"] {
+			color: #111111;
+			font-weight: 600;
+			text-decoration: underline;
+			text-underline-offset: 4px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		:global(html) {
+			scroll-behavior: auto;
+		}
+
+		.main-nav a {
+			transition: none;
+		}
+
+		.main-nav a::after {
+			transition: none;
+		}
+
+		.instagram,
+		.instagram::after {
+			transition: none;
+		}
+	}
+</style>

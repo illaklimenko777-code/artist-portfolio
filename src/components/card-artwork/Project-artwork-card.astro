@@ -1,0 +1,502 @@
+---
+import projectOne from "../../assets/img/banner-project-1.png";
+import projectTwo from "../../assets/img/banner-project-2.png";
+import projectThree from "../../assets/img/banner-project-3.png";
+
+const projectImages = [
+	{ image: projectOne, altUk: "Скульптурні об’єкти серії EXUVIAE", altEn: "Sculptural objects from the EXUVIAE series" },
+	{ image: projectTwo, altUk: "Скульптурна інсталяція серії EXUVIAE", altEn: "Sculptural installation from the EXUVIAE series" },
+	{ image: projectThree, altUk: "Підвісний скульптурний об’єкт EXUVIAE", altEn: "Suspended sculptural object from EXUVIAE" },
+];
+---
+
+<dialog
+	class="project-artwork-dialog"
+	aria-label="Проєкт EXUVIAE"
+	data-project-images={JSON.stringify(projectImages.map(({ image, altUk, altEn }) => ({
+		imageSrc: image.src,
+		altUk,
+		altEn,
+	})))}
+>
+	<div class="project-artwork-modal">
+		<header class="project-artwork-header">
+			<p data-uk="ОЛЕКСАНДРА ГЛУЩЕНКО · EXUVIAE" data-en="ALEXANDRA HLUSHCHENKO · EXUVIAE">
+				ОЛЕКСАНДРА ГЛУЩЕНКО · EXUVIAE
+			</p>
+			<button class="project-artwork-close" type="button" aria-label="Закрити">
+				<span aria-hidden="true">&times;</span>
+				<span data-uk="ЗАКРИТИ" data-en="CLOSE">ЗАКРИТИ</span>
+			</button>
+		</header>
+
+		<div class="project-artwork-content">
+			<div class="project-artwork-media">
+				<img
+					class="project-artwork-main-image"
+					src={projectImages[0].image.src}
+					alt={projectImages[0].altUk}
+				/>
+				<video class="project-artwork-video" controls preload="metadata" playsinline style="display: none">
+					<source src="/work-video-browser.mp4" type="video/mp4" />
+				</video>
+			</div>
+
+			<div class="project-artwork-details">
+				<p class="project-artwork-kicker" data-uk="РОЗДІЛ ПРОЄКТИ · EXUVIAE" data-en="PROJECTS · EXUVIAE">
+					РОЗДІЛ ПРОЄКТИ · EXUVIAE
+				</p>
+				<h2 data-uk="Проєкт «EXUVIAE»" data-en="“EXUVIAE” Project">Проєкт «EXUVIAE»</h2>
+				<p class="project-artwork-description"
+					data-uk="2026 · Серія відбитків автопортрету митця, епоксидна смола, поталь, пігменти, спрямоване світло прожектора"
+					data-en="2026 · A series of self-portrait imprints, epoxy resin, metal leaf, pigments, directed spotlight">
+					2026 · Серія відбитків автопортрету митця, епоксидна смола, поталь, пігменти, спрямоване світло прожектора
+				</p>
+
+				<div class="project-artwork-copy">
+					<p
+						data-uk="Проєкт «EXUVIAE» — це серія відбитків автопортрету митця, що фіксують акт сепарації справжньої суті від її застарілих ментальних оболонок-страхів."
+						data-en="The “EXUVIAE” project is a series of self-portrait imprints capturing the separation of the true self from outdated mental shells of fear.">
+						Проєкт «EXUVIAE» — це серія відбитків автопортрету митця, що фіксують акт сепарації справжньої суті від її застарілих ментальних оболонок-страхів.
+					</p>
+					<p
+						data-uk="Назва, запозичена з біології та латини, відсилає до екзувію — скинутої під час розвитку шкіри, або порожнього панцира, що колись служив захистом, але згодом перетворився на в’язницю, яка роками накопичувала токсичний минулий досвід та страхи."
+						data-en="Borrowed from biology and Latin, the name refers to an exuvia—the shed skin or empty shell that once served as protection but gradually became a prison, collecting toxic experiences and fears over the years.">
+						Назва, запозичена з біології та латини, відсилає до екзувію — скинутої під час розвитку шкіри, або порожнього панцира, що колись служив захистом, але згодом перетворився на в’язницю, яка роками накопичувала токсичний минулий досвід та страхи.
+					</p>
+					<p
+						data-uk="Перебуваючи у стані ілюзорної цілісності, настільки щільно зростаєшся зі своїми страхами та сприймаєш їх обмеження за власні кордони, що створюється неможливість ідентифікувати себе без них."
+						data-en="In a state of illusory wholeness, we become so closely bound to our fears and mistake their limits for our own boundaries that it becomes impossible to identify ourselves without them.">
+						Перебуваючи у стані ілюзорної цілісності, настільки щільно зростаєшся зі своїми страхами та сприймаєш їх обмеження за власні кордони, що створюється неможливість ідентифікувати себе без них.
+					</p>
+					<p
+						data-uk="Бажання проявити себе справжнього запускає незворотний ритуал сепарації, де процес зняття маски стає актом свідомого вивільнення старого бачення себе та вивільнення інтенсивності внутрішнього росту."
+						data-en="The desire to reveal the authentic self begins an irreversible ritual of separation, where removing the mask becomes a conscious release from an old self-image and an embrace of inner growth.">
+						Бажання проявити себе справжнього запускає незворотний ритуал сепарації, де процес зняття маски стає актом свідомого вивільнення старого бачення себе та вивільнення інтенсивності внутрішнього росту.
+					</p>
+					<p
+						data-uk="Спрямоване світло прожекторів відкидає від масок тіні, які створюють великий ефемерний відбиток минулого досвіду."
+						data-en="Directed spotlights cast shadows from the masks, forming a large, ephemeral imprint of past experience.">
+						Спрямоване світло прожекторів відкидає від масок тіні, які створюють великий ефемерний відбиток минулого досвіду.
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<footer class="project-artwork-footer">
+			<div class="project-artwork-thumbnails">
+				{projectImages.map((project, index) => (
+					<button
+						class="project-artwork-thumbnail"
+						type="button"
+						data-index={String(index)}
+						aria-label={`${index + 1}`}
+						aria-current={index === 0 ? "true" : undefined}
+					>
+						<img src={project.image.src} alt="" />
+					</button>
+				))}
+				<button
+					class="project-artwork-thumbnail project-artwork-video-thumbnail"
+					type="button"
+					data-video="true"
+					aria-label="Відео"
+				>
+					<span data-uk="ВІДЕО" data-en="VIDEO">ВІДЕО</span>
+				</button>
+			</div>
+			<div class="project-artwork-instagram">
+				<p data-uk="ВІДЕО ТА ПУБЛІКАЦІЇ В INSTAGRAM" data-en="VIDEO AND PUBLICATIONS ON INSTAGRAM">
+					ВІДЕО ТА ПУБЛІКАЦІЇ В INSTAGRAM
+				</p>
+				<a
+					href="https://www.instagram.com/a.h.mystery.art?stkn=cTEzYWI0YzFvZGtl"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<span data-uk="ПЕРЕГЛЯНУТИ В INSTAGRAM (@A.H.MYSTERY.ART)" data-en="VIEW ON INSTAGRAM (@A.H.MYSTERY.ART)">
+						ПЕРЕГЛЯНУТИ В INSTAGRAM (@A.H.MYSTERY.ART)
+					</span>
+					<span aria-hidden="true">&nearr;</span>
+				</a>
+			</div>
+		</footer>
+	</div>
+</dialog>
+
+<script is:inline>
+	const projectDialog = document.querySelector(".project-artwork-dialog");
+	if (projectDialog) {
+		const images = JSON.parse(projectDialog.dataset.projectImages || "[]");
+		const mainImage = projectDialog.querySelector(".project-artwork-main-image");
+		const video = projectDialog.querySelector(".project-artwork-video");
+		const thumbnails = Array.from(projectDialog.querySelectorAll(".project-artwork-thumbnail"));
+		let savedScrollY = 0;
+
+		function showProjectImage(index) {
+			const safeIndex = (index + images.length) % images.length;
+			const project = images[safeIndex];
+			if (!project || !mainImage || !video) return;
+
+			video.pause();
+			video.style.display = "none";
+			mainImage.style.display = "block";
+			mainImage.src = project.imageSrc;
+			const language = document.documentElement.lang === "en" ? "en" : "uk";
+			mainImage.alt = language === "en" ? project.altEn : project.altUk;
+			thumbnails.forEach((thumbnail) => {
+				if (thumbnail.dataset.video !== "true" && Number(thumbnail.dataset.index) === safeIndex) {
+					thumbnail.setAttribute("aria-current", "true");
+				} else {
+					thumbnail.removeAttribute("aria-current");
+				}
+			});
+		}
+
+		function showProjectVideo() {
+			if (!mainImage || !video) return;
+			mainImage.style.display = "none";
+			video.style.display = "block";
+			video.play().catch(() => {});
+			thumbnails.forEach((thumbnail) => {
+				if (thumbnail.dataset.video === "true") thumbnail.setAttribute("aria-current", "true");
+				else thumbnail.removeAttribute("aria-current");
+			});
+		}
+
+		function openProject(index) {
+			showProjectImage(index);
+			if (!projectDialog.open) projectDialog.showModal();
+			savedScrollY = window.scrollY;
+			document.body.style.position = "fixed";
+			document.body.style.top = `-${savedScrollY}px`;
+			document.body.style.left = "0";
+			document.body.style.right = "0";
+			document.body.style.overflow = "hidden";
+			document.documentElement.style.overflow = "hidden";
+			document.body.classList.add("project-artwork-open");
+		}
+
+		projectDialog.querySelector(".project-artwork-close")?.addEventListener("click", () => projectDialog.close());
+		projectDialog.addEventListener("click", (event) => {
+			if (event.target === projectDialog) projectDialog.close();
+		});
+		projectDialog.addEventListener("wheel", (event) => {
+			const modal = projectDialog.querySelector(".project-artwork-modal");
+			if (modal && !modal.contains(event.target)) event.preventDefault();
+		}, { passive: false });
+
+		thumbnails.forEach((thumbnail) => {
+			thumbnail.addEventListener("click", () => {
+				if (thumbnail.dataset.video === "true") showProjectVideo();
+				else showProjectImage(Number(thumbnail.dataset.index));
+			});
+		});
+
+		window.addEventListener("project-artwork-open", (event) => {
+			openProject(Number(event.detail?.index ?? 0));
+		});
+
+		projectDialog.addEventListener("close", () => {
+			video?.pause();
+			document.body.style.position = "";
+			document.body.style.top = "";
+			document.body.style.left = "";
+			document.body.style.right = "";
+			document.body.style.overflow = "";
+			document.documentElement.style.overflow = "";
+			document.body.classList.remove("project-artwork-open");
+			window.scrollTo(0, savedScrollY);
+		});
+	}
+</script>
+
+<style>
+	:global(body.project-artwork-open) {
+		overflow: hidden;
+	}
+
+	.project-artwork-dialog {
+		position: fixed;
+		inset: 0;
+		width: 100vw;
+		max-width: none;
+		height: 100vh;
+		max-height: none;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		overflow: hidden;
+		overscroll-behavior: contain;
+		background: transparent;
+	}
+
+	.project-artwork-dialog::backdrop {
+		background: rgba(17, 17, 17, 0.84);
+	}
+
+	.project-artwork-modal {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		display: flex;
+		width: min(760px, calc(100vw - 40px));
+		max-height: min(500px, calc(100vh - 40px));
+		flex-direction: column;
+		overflow: auto;
+		overscroll-behavior: contain;
+		transform: translate(-50%, -50%);
+		background: #fff;
+		color: #111111;
+	}
+
+	.project-artwork-header {
+		display: flex;
+		min-height: 48px;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 22px;
+		border-bottom: 1px solid #e6e6e6;
+		font-size: 8px;
+		letter-spacing: 0.08em;
+	}
+
+	.project-artwork-header p {
+		margin: 0;
+	}
+
+	.project-artwork-close {
+		display: flex;
+		align-items: center;
+		gap: 5px;
+		padding: 7px 10px;
+		border: 1px solid #e6e6e6;
+		background: transparent;
+		color: #111111;
+		font: inherit;
+		cursor: pointer;
+	}
+
+	.project-artwork-close:hover,
+	.project-artwork-close:focus-visible {
+		border-color: #111111;
+		background-color: #111111 !important;
+		color: #fff !important;
+	}
+
+	.project-artwork-close:hover span,
+	.project-artwork-close:focus-visible span {
+		color: #fff !important;
+	}
+
+	.project-artwork-content {
+		display: grid;
+		grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+		gap: 24px;
+		padding: 24px 22px 0;
+	}
+
+	.project-artwork-media {
+		display: flex;
+		min-width: 0;
+		flex-direction: column;
+		padding: 12px clamp(20px, 3.2vw, 44px);
+		background: #f7f7f7;
+	}
+
+	.project-artwork-main-image,
+	.project-artwork-video {
+		display: block;
+		width: 100%;
+		height: 240px;
+		object-fit: contain;
+		background: #f1f1f1;
+	}
+
+	.project-artwork-video {
+		background: #111111;
+	}
+
+	.project-artwork-main-image[hidden],
+	.project-artwork-video[hidden] {
+		display: none;
+	}
+
+	.project-artwork-details {
+		min-width: 0;
+		padding-bottom: 6px;
+	}
+
+	.project-artwork-kicker {
+		margin: 0 0 8px;
+		color: #6e6e6e;
+		font-size: 7px;
+		letter-spacing: 0.11em;
+	}
+
+	.project-artwork-details h2 {
+		margin: 0 0 7px;
+		font-family: "Lora", Georgia, serif;
+		font-size: 17px;
+		font-weight: 400;
+		line-height: 1.3;
+	}
+
+	.project-artwork-description {
+		margin: 0 0 12px;
+		padding-bottom: 10px;
+		border-bottom: 1px solid #e6e6e6;
+		color: #6e6e6e;
+		font-family: "Inter", Arial, sans-serif;
+		font-size: 11px;
+		line-height: 1.6;
+		letter-spacing: 0.02em;
+	}
+
+	.project-artwork-copy {
+		font-family: "Lora", Georgia, serif;
+		font-size: 8px;
+		line-height: 1.55;
+	}
+
+	.project-artwork-copy p {
+		margin: 0 0 10px;
+	}
+
+	.project-artwork-footer {
+		display: grid;
+		grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+		align-items: end;
+		gap: 24px;
+		padding: 10px 22px 22px;
+	}
+
+	.project-artwork-thumbnails {
+		display: flex;
+		gap: 6px;
+	}
+
+	.project-artwork-thumbnail {
+		width: 42px;
+		height: 58px;
+		padding: 3px;
+		border: 1px solid transparent;
+		background: #fff;
+		cursor: pointer;
+	}
+
+	.project-artwork-thumbnail[aria-current="true"] {
+		border-color: #111111;
+	}
+
+	.project-artwork-thumbnail img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.project-artwork-video-thumbnail {
+		display: grid;
+		place-items: center;
+		background: #6c6c6c;
+		color: #fff;
+		font-size: 7px;
+	}
+
+	.project-artwork-instagram {
+		background: #f7f7f7;
+		font-family: "Inter", Arial, sans-serif;
+	}
+
+	.project-artwork-instagram p {
+		margin: 0;
+		padding: 9px 10px 2px;
+		color: #6e6e6e;
+		font-size: 6px;
+		letter-spacing: 0.12em;
+	}
+
+	.project-artwork-instagram a {
+		display: flex;
+		width: 100%;
+		align-items: center;
+		gap: 4px;
+		padding: 3px 10px 9px;
+		border: 0;
+		background: transparent;
+		color: #111111;
+		font-family: inherit;
+		font-size: 7px;
+		letter-spacing: 0.08em;
+		text-align: left;
+		text-decoration: none;
+		cursor: pointer;
+	}
+
+	@media (max-width: 700px) {
+		.project-artwork-modal {
+			width: calc(100vw - 24px);
+			max-height: calc(100dvh - 24px);
+			overflow-y: auto;
+		}
+
+		.project-artwork-header {
+			position: sticky;
+			top: 0;
+			z-index: 2;
+			background: #fff;
+		}
+
+		.project-artwork-content,
+		.project-artwork-footer {
+			display: contents;
+		}
+
+		.project-artwork-media {
+			order: 1;
+			padding: 10px 10% 0;
+		}
+
+		.project-artwork-main-image,
+		.project-artwork-video {
+			height: min(42dvh, 280px);
+		}
+
+		.project-artwork-thumbnails {
+			display: grid;
+			width: calc(100% - 36px);
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+			gap: 8px;
+			order: 2;
+			max-width: none;
+			margin: 0 auto;
+			padding: 12px 0 0;
+		}
+
+		.project-artwork-details {
+			order: 3;
+			padding: 14px 18px 0;
+		}
+
+		.project-artwork-instagram {
+			order: 4;
+			margin: 16px 18px;
+		}
+
+		.project-artwork-details h2 {
+			font-size: 19px;
+		}
+
+		.project-artwork-thumbnail {
+			width: 100%;
+			height: auto;
+			aspect-ratio: 0.68;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.project-artwork-modal {
+			width: min(320px, calc(100vw - 24px));
+		}
+	}
+</style>

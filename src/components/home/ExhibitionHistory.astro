@@ -1,0 +1,330 @@
+---
+const exhibitions = [
+	{
+		years: ["2026"],
+		yearLabel: "2026",
+		typeUk: "Серія та проєкт",
+		typeEn: "Series & Project",
+		titleUk: "«EXUVIAE»",
+		titleEn: "“EXUVIAE”",
+		venueUk: "Авторський проєкт",
+		venueEn: "Solo Project",
+		locationUk: "Київ, Україна",
+		locationEn: "Kyiv, Ukraine",
+	},
+	{
+		years: ["2025"],
+		yearLabel: "2025",
+		typeUk: "Парна виставка",
+		typeEn: "Duo Exhibition",
+		titleUk: "«Відкриття»",
+		titleEn: "“Discovery”",
+		venueUk: "Простір «Шука»",
+		venueEn: "“Shuka” Art Space",
+		locationUk: "Київ, Україна",
+		locationEn: "Kyiv, Ukraine",
+	},
+	{
+		years: ["2025"],
+		yearLabel: "2025",
+		typeUk: "Групова виставка",
+		typeEn: "Group Exhibition",
+		titleUk: "«Вільні стіни»",
+		titleEn: "“Free Walls”",
+		venueUk: "Простір «Flowerbed Gallery»",
+		venueEn: "“Flowerbed Gallery” Space",
+		locationUk: "Київ, Україна",
+		locationEn: "Kyiv, Ukraine",
+	},
+	{
+		years: ["2025"],
+		yearLabel: "2025",
+		typeUk: "Групова виставка",
+		typeEn: "Group Exhibition",
+		titleUk: "«Нова чутливість»",
+		titleEn: "“New Sensitivity”",
+		venueUk: "Простір «Amico Gallery»",
+		venueEn: "“Amico Gallery” Space",
+		locationUk: "Київ, Україна",
+		locationEn: "Kyiv, Ukraine",
+	},
+	{
+		years: ["2025"],
+		yearLabel: "2025",
+		typeUk: "Групова виставка",
+		typeEn: "Group Exhibition",
+		titleUk: "«Мистецтво без меж»",
+		titleEn: "“Art Without Borders”",
+		venueUk: "Простір «Armigera Art»",
+		venueEn: "“Armigera Art” Space",
+		locationUk: "Львів, Україна",
+		locationEn: "Lviv, Ukraine",
+	},
+	{
+		years: ["2023", "2024"],
+		yearLabel: "2023–2024",
+		typeUk: "Групова виставка",
+		typeEn: "Group Exhibition",
+		titleUk: "«Фенікс відроджується»",
+		titleEn: "“Fenix Reborn”",
+		venueUk: "Простір «Mariupol Reborn»",
+		venueEn: "“Mariupol Reborn” Space",
+		locationUk: "Львів, Україна",
+		locationEn: "Lviv, Ukraine",
+	},
+	{
+		years: ["2023"],
+		yearLabel: "2023",
+		typeUk: "Групова виставка",
+		typeEn: "Group Exhibition",
+		titleUk: "«Фенікс відроджується»",
+		titleEn: "“Fenix Reborn”",
+		venueUk: "Простір «Urban space 500»",
+		venueEn: "“Urban space 500” Space",
+		locationUk: "Київ, Україна",
+		locationEn: "Kyiv, Ukraine",
+	},
+	{
+		years: ["2022"],
+		yearLabel: "2022",
+		typeUk: "Групова виставка",
+		typeEn: "Group Exhibition",
+		titleUk: "«Війна та мир»",
+		titleEn: "“War and Peace”",
+		venueUk: "Простір «Madi Art&Wine gallery»",
+		venueEn: "“Madi Art&Wine gallery” Space",
+		locationUk: "Київ, Україна",
+		locationEn: "Kyiv, Ukraine",
+	},
+];
+---
+
+<section class="exhibition-history-section" id="exhibition-history">
+	<div class="projects-heading">
+		<h2 data-uk="02 / ВИСТАВКОВА ІСТОРІЯ" data-en="02 / EXHIBITION HISTORY">
+			02 / ВИСТАВКОВА ІСТОРІЯ
+		</h2>
+	</div>
+
+	<div
+		class="project-filters"
+		role="group"
+		aria-label="Фільтри за роком"
+		data-aria-uk="Фільтри за роком"
+		data-aria-en="Filter by year"
+	>
+		<button class="project-filter" type="button" data-filter="all" aria-pressed="true">
+			<span data-uk="ВСІ" data-en="ALL">ВСІ</span>
+		</button>
+		{["2022", "2023", "2024", "2025", "2026"].map((year) => (
+			<button class="project-filter" type="button" data-filter={year} aria-pressed="false">
+				<span>{year}</span>
+			</button>
+		))}
+	</div>
+
+	<table class="exhibition-history">
+		<caption class="visually-hidden" data-uk="Історія виставок за роками" data-en="Exhibition history by year">
+			Історія виставок за роками
+		</caption>
+		<thead class="visually-hidden">
+			<tr>
+				<th scope="col" data-uk="Рік" data-en="Year">Рік</th>
+				<th scope="col" data-uk="Виставка" data-en="Exhibition">Виставка</th>
+				<th scope="col" data-uk="Місце проведення" data-en="Venue">Місце проведення</th>
+				<th scope="col" data-uk="Місто" data-en="Location">Місто</th>
+			</tr>
+		</thead>
+		<tbody>
+			{exhibitions.map((exhibition) => (
+				<tr data-years={exhibition.years.join(" ")}>
+					<td class="history-year">{exhibition.yearLabel}</td>
+					<td>
+						<span data-uk={exhibition.typeUk} data-en={exhibition.typeEn}>{exhibition.typeUk}</span>{" "}
+						<span data-uk={exhibition.titleUk} data-en={exhibition.titleEn}>{exhibition.titleUk}</span>
+					</td>
+					<td data-uk={exhibition.venueUk} data-en={exhibition.venueEn}>{exhibition.venueUk}</td>
+					<td data-uk={exhibition.locationUk} data-en={exhibition.locationEn}>{exhibition.locationUk}</td>
+				</tr>
+			))}
+		</tbody>
+	</table>
+</section>
+
+<script>
+	const historySection = document.querySelector<HTMLElement>("#exhibition-history");
+
+	if (historySection) {
+		const filterButtons = historySection.querySelectorAll<HTMLButtonElement>(".project-filter");
+		const exhibitionRows = historySection.querySelectorAll<HTMLTableRowElement>(".exhibition-history tbody tr");
+
+		filterButtons.forEach((button) => {
+			button.addEventListener("click", () => {
+				const filter = button.dataset.filter;
+				if (!filter) return;
+
+				filterButtons.forEach((filterButton) => {
+					filterButton.setAttribute("aria-pressed", String(filterButton === button));
+				});
+
+				exhibitionRows.forEach((row) => {
+					const years = row.dataset.years?.split(" ") ?? [];
+					row.hidden = filter !== "all" && !years.includes(filter);
+				});
+			});
+		});
+	}
+</script>
+
+<style>
+	.exhibition-history-section {
+		padding: 22px 0 64px;
+		border-top: 1px solid #e6e6e6;
+		font-weight: 400;
+		scroll-margin-top: 90px;
+	}
+
+	.projects-heading {
+		display: flex;
+		align-items: center;
+		margin-bottom: 12px;
+		padding-bottom: 12px;
+		border-bottom: 1px solid #e6e6e6;
+	}
+
+	.projects-heading h2 {
+		margin: 0;
+		color: #111111;
+		font-family: "Lora", Georgia, serif;
+		font-size: 26px;
+		font-weight: 400;
+		line-height: 1.3;
+	}
+
+	.project-filters {
+		display: flex;
+		gap: 18px;
+		margin-bottom: 10px;
+	}
+
+	.project-filter {
+		position: relative;
+		padding: 0 0 5px;
+		border: 0;
+		background: transparent;
+		color: #111111;
+		font: inherit;
+		font-family: "Inter", Arial, sans-serif;
+		font-size: 12px;
+		text-transform: uppercase;
+		letter-spacing: 0.15em;
+		cursor: pointer;
+	}
+
+	.project-filter[aria-pressed="true"]::after {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		height: 1px;
+		background: currentColor;
+		content: "";
+	}
+
+	.exhibition-history {
+		width: 100%;
+		border-collapse: collapse;
+		table-layout: fixed;
+		font-size: 9px;
+	}
+
+	.exhibition-history tr {
+		border-top: 1px solid #e6e6e6;
+	}
+
+	.exhibition-history tr:last-child {
+		border-bottom: 1px solid #e6e6e6;
+	}
+
+	.exhibition-history td {
+		padding: 10px 6px;
+		vertical-align: top;
+	}
+
+	.exhibition-history td:first-child {
+		width: 64px;
+		padding-left: 0;
+	}
+
+	.exhibition-history td:nth-child(2) {
+		width: 48%;
+		color: #111111;
+	}
+
+	.exhibition-history td:nth-child(3) {
+		width: 26%;
+		color: #6e6e6e;
+	}
+
+	.exhibition-history td:last-child {
+		padding-right: 0;
+		color: #6e6e6e;
+		font-size: 8px;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		text-align: right;
+	}
+
+	.history-year {
+		color: #6e6e6e;
+		white-space: nowrap;
+	}
+
+	.visually-hidden {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	@media (max-width: 700px) {
+		.exhibition-history-section {
+			padding: 20px 0 48px;
+		}
+
+		.project-filters {
+			gap: 14px;
+		}
+
+		.exhibition-history {
+			font-size: 8px;
+		}
+
+		.exhibition-history td {
+			padding: 8px 4px;
+		}
+
+		.exhibition-history td:first-child {
+			width: 58px;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.exhibition-history td:nth-child(3) {
+			display: none;
+		}
+
+		.exhibition-history td:nth-child(2) {
+			width: auto;
+		}
+
+		.exhibition-history td:last-child {
+			width: 92px;
+		}
+	}
+</style>

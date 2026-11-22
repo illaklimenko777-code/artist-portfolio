@@ -1,0 +1,280 @@
+---
+import portrait from "../../assets/img/banner-bio-1.png";
+import detailOne from "../../assets/img/banner-bio-2.png";
+import detailTwo from "../../assets/img/banner-bio-3.png";
+import ExhibitionHistory from "./ExhibitionHistory.astro";
+import BiograbhyArtworkCard from "../card-artwork/Biograbhy-artworks-card.astro";
+---
+
+<section class="biography-section" id="bio">
+	<div class="biography-heading">
+		<h2 data-uk="Біографія" data-en="Biography">Біографія</h2>
+		<p data-uk="03 / ПРО МИСТЕЦТВО ТА ВИСТАВКОВУ ІСТОРІЮ" data-en="03 / ART & EXHIBITION HISTORY">
+			03 / ПРО МИСТЕЦТВО ТА ВИСТАВКОВУ ІСТОРІЮ
+		</p>
+	</div>
+	<p class="biography-section-label" data-uk="01 / ПРО МИТЦЯ" data-en="01 / ABOUT THE ARTIST">
+		01 / ПРО МИТЦЯ
+	</p>
+
+	<div class="biography-grid">
+		<div class="portrait-collage" role="group" aria-label="Портрети художниці" data-aria-uk="Портрети художниці" data-aria-en="Artist portraits">
+			<img
+				class="portrait-main"
+				src={portrait.src}
+				alt="Олександра Глущенко з роботою серії EXUVIAE"
+				data-alt-uk="Олександра Глущенко з роботою серії EXUVIAE"
+				data-alt-en="Alexandra Hlushchenko with a work from the EXUVIAE series"
+				data-biography-index="0"
+				width={portrait.width}
+				height={portrait.height}
+				loading="lazy"
+			/>
+			<div class="portrait-details">
+				<img
+					src={detailOne.src}
+					alt="Портрет художниці за скульптурою"
+					data-alt-uk="Портрет художниці за скульптурою"
+					data-alt-en="Portrait of the artist behind a sculpture"
+					data-biography-index="1"
+					width={detailOne.width}
+					height={detailOne.height}
+					loading="lazy"
+				/>
+				<img
+					src={detailTwo.src}
+					alt="Художниця тримає скульптурну роботу"
+					data-alt-uk="Художниця тримає скульптурну роботу"
+					data-alt-en="The artist holding a sculptural work"
+					data-biography-index="2"
+					width={detailTwo.width}
+					height={detailTwo.height}
+					loading="lazy"
+				/>
+			</div>
+		</div>
+
+		<div class="biography-copy">
+			<p class="biography-lead"
+				data-uk="Моя мистецька практика — це простір трансгресії та ритуал трансформації, у якому матерія стає свідком і архівом мого внутрішнього становлення."
+				data-en="My artistic practice is a space of transgression and a ritual of transformation, in which matter becomes a witness, an archive of my inner becoming.">
+				Моя мистецька практика — це простір трансгресії та ритуал трансформації, у якому матерія стає свідком і архівом мого внутрішнього становлення.
+			</p>
+			<p
+				data-uk="Мій процес — це акт радикального звільнення від застарілих форм. Я дозволяю собі втрачати, змінюватися й відроджуватися, втілюючи кожен етап подорожі у мистецтві."
+				data-en="My process is an act of radical liberation from outdated forms. I allow myself to lose, change, and be reborn, embodying each stage of the journey in art.">
+				Мій процес — це акт радикального звільнення від застарілих форм. Я дозволяю собі втрачати, змінюватися й відроджуватися, втілюючи кожен етап подорожі у мистецтві.
+			</p>
+			<p
+				data-uk="Я не прагну лише зберегти минуле — я перетворюю травму на невід’ємну частину нової ідентичності. Шрами стають символом сили, а мистецтво — способом осмислити реальність, що вимагає змін."
+				data-en="I do not seek merely to preserve the past — I transform trauma into an integral part of my new identity. Scars become a symbol of strength, and art becomes a way to respond to a reality that demands change.">
+				Я не прагну лише зберегти минуле — я перетворюю травму на невід’ємну частину нової ідентичності. Шрами стають символом сили, а мистецтво — способом осмислити реальність, що вимагає змін.
+			</p>
+			<p
+				data-uk="Це мій маніфест оновлення, де кожен об’єкт фіксує мить переходу, у якій стара оболонка життя стає основою майбутньої трансформації."
+				data-en="This is my manifesto of renewal, where each object records a moment of transition in which the old skin of life becomes the foundation for future transformation.">
+				Це мій маніфест оновлення, де кожен об’єкт фіксує мить переходу, у якій стара оболонка життя стає основою майбутньої трансформації.
+			</p>
+
+			<div class="process-video">
+				<div class="video-caption">
+					<span data-uk="ІНСТАЛЯЦІЯ ТА ВІДЕО ЗІ СТУДІЇ" data-en="INSTALLATION & STUDIO PROCESS VIDEO">
+						ІНСТАЛЯЦІЯ ТА ВІДЕО ЗІ СТУДІЇ
+					</span>
+					<span data-uk="РОБОЧИЙ ПРОЦЕС" data-en="STUDIO PROCESS">РОБОЧИЙ ПРОЦЕС</span>
+				</div>
+				<video
+					controls
+					preload="metadata"
+					playsinline
+					aria-label="Відео з інсталяцією та робочим процесом"
+					data-aria-uk="Відео з інсталяцією та робочим процесом"
+					data-aria-en="Installation and studio process video"
+				>
+					<source src="/work-video-browser.mp4" type="video/mp4" />
+					<span data-uk="Ваш браузер не підтримує відтворення цього відео."
+						data-en="Your browser does not support playback of this video.">
+						Ваш браузер не підтримує відтворення цього відео.
+					</span>
+				</video>
+			</div>
+		</div>
+	</div>
+
+	<BiograbhyArtworkCard />
+	<ExhibitionHistory />
+</section>
+
+<style>
+	.biography-section {
+		padding: 30px 0 24px;
+		border-top: 1px solid #e6e6e6;
+		scroll-margin-top: 90px;
+	}
+
+	.biography-heading {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 16px;
+		margin-bottom: 14px;
+		padding-bottom: 12px;
+		border-bottom: 1px solid #e6e6e6;
+	}
+
+	.biography-heading h2 {
+		margin: 0;
+		font-family: "Lora", Georgia, serif;
+		font-size: 26px;
+		font-weight: 400;
+		line-height: 1.3;
+	}
+
+	.biography-heading p {
+		margin: 0;
+		color: #6e6e6e;
+		font-size: 8px;
+		letter-spacing: 0.04em;
+	}
+
+	.biography-section-label {
+		margin: 0 0 18px;
+		color: #6e6e6e;
+		font-size: 8px;
+		letter-spacing: 0.04em;
+	}
+
+	.biography-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
+		align-items: start;
+		gap: 32px;
+	}
+
+	.portrait-collage {
+		display: grid;
+		gap: 8px;
+	}
+
+	.portrait-collage img {
+		display: block;
+		width: 100%;
+		height: auto;
+		object-fit: cover;
+		cursor: pointer;
+		transition: transform 220ms ease;
+	}
+
+	.portrait-collage img:focus-visible {
+		outline: 1px solid #111111;
+		outline-offset: 3px;
+	}
+
+	@media (hover: hover) {
+		.portrait-collage img:hover {
+			transform: scale(1.025);
+		}
+	}
+
+	.portrait-main {
+		aspect-ratio: 1.47;
+		object-position: center 38%;
+	}
+
+	.portrait-details {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 8px;
+	}
+
+	.portrait-details img {
+		aspect-ratio: 1;
+	}
+
+	.biography-copy {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.biography-copy p {
+		margin: 0;
+		color: #6e6e6e;
+		font-family: "Inter", Arial, sans-serif;
+		font-size: 14px;
+		line-height: 1.85;
+		letter-spacing: 0.02em;
+	}
+
+	.biography-copy .biography-lead {
+		margin-bottom: 2px;
+		color: #111111;
+		font-family: "Lora", Georgia, serif;
+		font-size: 21px;
+		line-height: 1.6;
+		letter-spacing: normal;
+	}
+
+	.process-video {
+		margin-top: 10px;
+	}
+
+	.video-caption {
+		display: flex;
+		justify-content: space-between;
+		gap: 12px;
+		margin-bottom: 8px;
+		color: #6e6e6e;
+		font-size: 7px;
+		letter-spacing: 0.06em;
+	}
+
+	.process-video video {
+		display: block;
+		width: 100%;
+		aspect-ratio: 16 / 9;
+		background: #111111;
+		object-fit: contain;
+	}
+
+	@media (max-width: 700px) {
+		.biography-section {
+			padding: 26px 0 20px;
+		}
+
+		.biography-grid {
+			grid-template-columns: 1fr;
+			gap: 24px;
+		}
+
+		.portrait-main {
+			max-height: 620px;
+		}
+
+		.portrait-details img {
+			max-height: 360px;
+		}
+
+		.process-video video {
+			aspect-ratio: 4 / 3;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.biography-heading {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 8px;
+		}
+
+		.video-caption {
+			font-size: 6px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.portrait-collage img {
+			transition: none;
+		}
+	}
+</style>

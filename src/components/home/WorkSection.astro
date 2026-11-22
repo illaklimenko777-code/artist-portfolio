@@ -1,0 +1,256 @@
+---
+import ArtworkCard from "../card-artwork/ArtworkCard.astro";
+import artworkOne from "../../assets/img/works-img-1.png";
+import artworkTwo from "../../assets/img/works-img-2.png";
+import artworkThree from "../../assets/img/works-img-3.png";
+import artworkFour from "../../assets/img/works-img-4.png";
+import artworkFive from "../../assets/img/works-img-5.png";
+import artworkSix from "../../assets/img/works-img-6.png";
+
+const artworks = [
+	{
+		image: artworkOne,
+		series: "exuviae",
+		altUk: "Підвісна скульптура з металу та її тінь",
+		altEn: "Suspended metal sculpture and its shadow",
+		titleUk: "«Екзувій: Страх, що нічого не вийде»",
+		titleEn: "“Exuvia: The fear that nothing will work out”",
+		descriptionUk: "2026 · 30 × 20 см · Епоксидна смола, поталь, пігменти, текстурні пасти, емаль",
+		descriptionEn: "2026 · 30 × 20 cm · Epoxy resin, metal leaf, pigments, texture paste, enamel",
+	},
+	{
+		image: artworkTwo,
+		series: "exuviae",
+		altUk: "Темна металева скульптура з тінню на стіні",
+		altEn: "Dark metal sculpture casting a shadow on the wall",
+		titleUk: "«Екзувій II: Тінь сумнівів»",
+		titleEn: "“Exuvia II: Shadow of doubt”",
+		descriptionUk: "2026 · 30 × 20 см · Метал, авторська техніка",
+		descriptionEn: "2026 · 30 × 20 cm · Metal, original technique",
+	},
+	{
+		image: artworkThree,
+		series: "exuviae",
+		altUk: "Золота підвісна скульптура з виразною тінню",
+		altEn: "Golden suspended sculpture with a distinct shadow",
+		titleUk: "«Екзувій III: Золота пастка»",
+		titleEn: "“Exuvia III: Golden trap”",
+		descriptionUk: "2026 · 30 × 20 см · Епоксидна смола, поталь, пігменти",
+		descriptionEn: "2026 · 30 × 20 cm · Epoxy resin, metal leaf, pigments",
+	},
+	{
+		image: artworkFour,
+		series: "exuviae",
+		altUk: "Скульптура з темно-червоною фактурою та тінню",
+		altEn: "Sculpture with a dark red texture and shadow",
+		titleUk: "«Екзувій IV: Жива матерія»",
+		titleEn: "“Exuvia IV: Living matter”",
+		descriptionUk: "2026 · 30 × 20 см · Епоксидна смола, пігменти, текстурна паста",
+		descriptionEn: "2026 · 30 × 20 cm · Epoxy resin, pigments, texture paste",
+	},
+	{
+		image: artworkFive,
+		series: "exuviae",
+		altUk: "Прозора скульптура з білою фактурою та тінню",
+		altEn: "Translucent white-textured sculpture and its shadow",
+		titleUk: "«Екзувій V: Прозора межа»",
+		titleEn: "“Exuvia V: Transparent boundary”",
+		descriptionUk: "2026 · 30 × 20 см · Епоксидна смола, пігменти",
+		descriptionEn: "2026 · 30 × 20 cm · Epoxy resin, pigments",
+	},
+	{
+		image: artworkSix,
+		series: "exuviae",
+		altUk: "Світла скульптура та її тінь на темній стіні",
+		altEn: "Light-colored sculpture and its shadow on a dark wall",
+		titleUk: "«Екзувій VI: Відбиток тіні»",
+		titleEn: "“Exuvia VI: Imprint of a shadow”",
+		descriptionUk: "2026 · 30 × 20 см · Епоксидна смола, авторська техніка",
+		descriptionEn: "2026 · 30 × 20 cm · Epoxy resin, original technique",
+	},
+];
+---
+
+<section class="work-section" id="work-section">
+	<div class="works-heading">
+		<h1 data-uk="Роботи" data-en="Works">Роботи</h1>
+		<p data-uk="ВИБРАНІ РОБОТИ — КОЖНА З НИХ РОЗПОВІДАЄ СВОЮ ІСТОРІЮ"
+			data-en="SELECTED WORKS — EACH ONE TELLS ITS OWN STORY">
+			ВИБРАНІ РОБОТИ — КОЖНА З НИХ РОЗПОВІДАЄ СВОЮ ІСТОРІЮ
+		</p>
+	</div>
+
+	<div
+		class="work-filters"
+		role="group"
+		aria-label="Фільтри робіт"
+		data-aria-uk="Фільтри робіт"
+		data-aria-en="Artwork filters"
+	>
+		<button class="work-filter" type="button" data-filter="all" aria-pressed="true">
+			<span data-uk="ВСІ СЕРІЇ" data-en="ALL SERIES">ВСІ СЕРІЇ</span>
+		</button>
+		<button class="work-filter" type="button" data-filter="exuviae" aria-pressed="false">
+			<span data-uk="СЕРІЯ «EXUVIAE»" data-en="“EXUVIAE” SERIES">СЕРІЯ «EXUVIAE»</span>
+		</button>
+	</div>
+
+	<div class="artwork-grid">
+		{artworks.map((artwork, index) => <ArtworkCard {...artwork} index={index} />)}
+	</div>
+</section>
+
+<script>
+	const workSection = document.querySelector<HTMLElement>("#work-section");
+
+	if (workSection) {
+		const filterButtons = workSection.querySelectorAll<HTMLButtonElement>(".work-filter");
+		const cards = workSection.querySelectorAll<HTMLElement>(".artwork-card");
+
+		function openArtwork(frame: HTMLElement) {
+			const card = frame.closest<HTMLElement>(".artwork-card");
+			const image = frame.querySelector<HTMLImageElement>("img");
+			const title = card?.querySelector<HTMLElement>("h2 > span:first-child");
+			const description = card?.querySelector<HTMLElement>(".artwork-description");
+			if (!card || !image || !title || !description) return;
+
+			window.dispatchEvent(new CustomEvent("home-artwork-open", {
+				detail: {
+					index: Number(card.dataset.artworkIndex),
+					altUk: image.dataset.altUk,
+					altEn: image.dataset.altEn,
+					titleUk: title.dataset.uk,
+					titleEn: title.dataset.en,
+					descriptionUk: description.dataset.uk,
+					descriptionEn: description.dataset.en,
+				},
+			}));
+		}
+
+		workSection.querySelectorAll<HTMLElement>(".artwork-image-frame").forEach((frame) => {
+			frame.addEventListener("click", () => openArtwork(frame));
+			frame.addEventListener("keydown", (event) => {
+				if (event.key === "Enter" || event.key === " ") {
+					event.preventDefault();
+					openArtwork(frame);
+				}
+			});
+		});
+
+		filterButtons.forEach((button) => {
+			button.addEventListener("click", () => {
+				const filter = button.dataset.filter;
+				if (!filter) return;
+
+				filterButtons.forEach((filterButton) => {
+					filterButton.setAttribute("aria-pressed", String(filterButton === button));
+				});
+
+				cards.forEach((card) => {
+					card.hidden = filter !== "all" && card.dataset.series !== filter;
+				});
+			});
+		});
+	}
+</script>
+
+<style>
+	.work-section {
+		padding: 28px 0 64px;
+	}
+
+	.works-heading {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 16px;
+		margin-bottom: 14px;
+	}
+
+	.works-heading h1 {
+		margin: 0;
+		font-family: "Lora", Georgia, serif;
+		font-size: 26px;
+		font-weight: 400;
+		line-height: 1.3;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+	}
+
+	.works-heading p {
+		margin: 0;
+		color: #6E6E6E;
+		font-size: 9px;
+		letter-spacing: 0.04em;
+	}
+
+	.work-filters {
+		display: flex;
+		gap: 18px;
+		margin: 0 0 18px;
+	}
+
+	.work-filter {
+		position: relative;
+		padding: 0 0 5px;
+		border: 0;
+		background: transparent;
+		color: #111111;
+		font: inherit;
+		font-family: "Inter", Arial, sans-serif;
+		font-size: 12px;
+		text-transform: uppercase;
+		letter-spacing: 0.15em;
+		cursor: pointer;
+	}
+
+	.work-filter[aria-pressed="true"] {
+		color: #111111;
+	}
+
+	.work-filter[aria-pressed="true"]::after {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		height: 1px;
+		background: currentColor;
+		content: "";
+	}
+
+	.artwork-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		column-gap: 22px;
+		row-gap: 20px;
+	}
+
+	@media (max-width: 700px) {
+		.work-section {
+			padding: 24px 0 48px;
+		}
+
+		.works-heading {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 8px;
+			margin-bottom: 14px;
+		}
+
+		.work-filters {
+			margin-bottom: 16px;
+		}
+
+		.artwork-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 22px 14px;
+		}
+	}
+
+	@media (max-width: 420px) {
+		.artwork-grid {
+			grid-template-columns: 1fr;
+			row-gap: 24px;
+		}
+	}
+</style>

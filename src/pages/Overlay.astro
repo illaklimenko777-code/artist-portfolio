@@ -1,0 +1,168 @@
+---
+import banner from "../assets/img/banner-overlay.png";
+---
+
+<div class="welcome-overlay">
+	<section class="welcome-card" aria-label="Choose a language">
+		<img class="welcome-image" src={banner.src} alt="Sculptural artwork by Alexandra Hlushchenko banner" />
+		<h1 lang="uk">ОЛЕКСАНДРА ГЛУЩЕНКО</h1>
+		<p class="translated-name">ALEXANDRA HLUSHCHENKO</p>
+
+		<div class="language-picker" aria-label="Language">
+			<button type="button" lang="uk" aria-pressed="true">UA / УКРАЇНСЬКА</button>
+			<span class="language-divider" aria-hidden="true"></span>
+			<button type="button" lang="en" aria-pressed="false">EN / ENGLISH</button>
+		</div>
+	</section>
+</div>
+
+<script>
+	const welcomeOverlay = document.querySelector<HTMLElement>(".welcome-overlay");
+
+	if (sessionStorage.getItem("portfolio-enter-main") === "true") {
+		sessionStorage.removeItem("portfolio-enter-main");
+		welcomeOverlay?.remove();
+		document.body.style.overflow = "";
+	} else if (welcomeOverlay) {
+		document.body.style.overflow = "hidden";
+	}
+
+	const languageButtons = document.querySelectorAll<HTMLButtonElement>(".language-picker button");
+
+	languageButtons.forEach((button) => {
+		button.addEventListener("click", () => {
+			languageButtons.forEach((languageButton) => {
+				languageButton.disabled = true;
+			});
+			localStorage.setItem("portfolio-language", button.lang);
+			sessionStorage.setItem("portfolio-enter-main", "true");
+			document.body.style.overflow = "";
+			window.location.assign(`/?lang=${button.lang}`);
+		});
+	});
+</script>
+
+<style>
+	.welcome-overlay {
+		position: fixed;
+		z-index: 9999;
+		inset: 0;
+		display: grid;
+		min-height: 100svh;
+		place-items: center;
+		padding: 32px 20px;
+		box-sizing: border-box;
+		overflow: hidden;
+		background: #fff;
+		color: #171717;
+	}
+
+	.welcome-card {
+		display: flex;
+		width: min(100%, 360px);
+		align-items: center;
+		flex-direction: column;
+		transform: translateY(-18px);
+		text-align: center;
+	}
+
+	.welcome-image {
+		display: block;
+		width: 132px;
+		height: 198px;
+		box-sizing: border-box;
+		padding: 5px;
+		border: 1px solid #e8e8e8;
+		background: #f7f7f7;
+		object-fit: cover;
+	}
+
+	h1 {
+		width: max-content;
+		margin: 18px 0 0;
+		font-family: "Lora", Georgia, "Times New Roman", serif;
+		font-size: clamp(19px, 4vw, 23px);
+		line-height: 1.3;
+		letter-spacing: 0.2em;
+		color: #111111;
+		font-size: 25px;
+		font-weight: 400;
+		white-space: nowrap;
+	}
+
+	.translated-name {
+		margin: 4px 0 0;
+		color: #6e6e6e;
+		font-family: "Lora", Georgia, "Times New Roman", serif;
+		font-size: 16px;
+		line-height: 1.5;
+	}
+
+	.language-picker {
+		display: flex;
+		width: min(100%, 262px);
+		align-items: center;
+		justify-content: space-between;
+		margin-top: 27px;
+		padding-top: 21px;
+		border-top: 1px solid #e3e3e3;
+	}
+
+	.language-picker button {
+		position: relative;
+		padding: 3px 12px;
+		border: 0;
+		background: transparent;
+		color: #111111;
+		font: inherit;
+		font-family: "Inter", Arial, sans-serif;
+		font-size: 12px;
+		cursor: pointer;
+	}
+
+	.language-picker button::after {
+		position: absolute;
+		right: 12px;
+		bottom: 0;
+		left: 12px;
+		height: 1px;
+		background: currentColor;
+		content: "";
+		transform: scaleX(0);
+		transform-origin: center;
+		transition: transform 220ms ease;
+	}
+
+	.language-picker button:hover::after,
+	.language-picker button:focus-visible::after {
+		transform: scaleX(1);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.language-picker button::after {
+			transition: none;
+		}
+	}
+
+	.language-divider {
+		width: 1px;
+		height: 16px;
+		background: #ffffff;
+	}
+
+	@media (max-height: 560px) {
+		.welcome-card {
+			transform: none;
+		}
+
+		.welcome-image {
+			width: 105px;
+			height: 158px;
+		}
+
+		.language-picker {
+			margin-top: 18px;
+			padding-top: 14px;
+		}
+	}
+</style>

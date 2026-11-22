@@ -1,0 +1,445 @@
+<section class="contacts-section" id="contacts">
+	<div class="contacts-heading">
+		<h2 data-uk="Контакти" data-en="Contacts">Контакти</h2>
+		<p data-uk="ЗВ’ЯЗОК З МИСТЕЦТВОМ" data-en="ART INQUIRIES">ЗВ’ЯЗОК З МИСТЕЦТВОМ</p>
+	</div>
+
+	<div class="contacts-grid">
+		<div class="artist-contact">
+			<h3 data-uk="Олександра Глущенко" data-en="Alexandra Hlushchenko">Олександра Глущенко</h3>
+			<p
+				class="artist-description"
+				data-uk="Художниця та скульпторка. Відкрита до співпраці й мистецьких проєктів."
+				data-en="Artist and sculptor. Open to collaborations and art projects."
+			>
+				Художниця та скульпторка. Відкрита до співпраці й мистецьких проєктів.
+			</p>
+
+			<dl class="contact-details">
+				<div>
+					<dt data-uk="E-MAIL" data-en="E-MAIL">E-MAIL</dt>
+					<dd><a href="#" data-placeholder-link>alexandraglushchenko.art@gmail.com</a></dd>
+				</div>
+				<div>
+					<dt data-uk="INSTAGRAM" data-en="INSTAGRAM">INSTAGRAM</dt>
+					<dd>
+						<a href="https://www.instagram.com/a.h.mystery.art?stkn=cTEzYWI0YzFvZGtl" target="_blank" rel="noopener noreferrer">
+							@a.m.mystery.art
+						</a>
+					</dd>
+				</div>
+				<div>
+					<dt data-uk="ТЕЛЕФОН" data-en="PHONE">ТЕЛЕФОН</dt>
+					<dd><a href="#" data-placeholder-link>+38 050 062 32 25</a></dd>
+				</div>
+			</dl>
+		</div>
+
+		<form
+			class="contact-form"
+			id="contact-form"
+		>
+			<div class="form-fields">
+				<label>
+					<span class="visually-hidden" data-uk="Ваше ім’я" data-en="Your name">Ваше ім’я</span>
+					<input
+						type="text"
+						name="name"
+						autocomplete="name"
+						required
+						placeholder="Ваше ім’я"
+						data-placeholder-uk="Ваше ім’я"
+						data-placeholder-en="Your name"
+					/>
+				</label>
+				<label>
+					<span class="visually-hidden" data-uk="E-mail або телефон" data-en="Email or phone">
+						E-mail або телефон
+					</span>
+					<input
+						type="text"
+						name="replyTo"
+						autocomplete="email"
+						required
+						placeholder="E-mail або телефон"
+						data-placeholder-uk="E-mail або телефон"
+						data-placeholder-en="Email or phone"
+					/>
+				</label>
+				<label class="message-field">
+					<span class="visually-hidden" data-uk="Повідомлення" data-en="Message">Повідомлення</span>
+					<textarea
+						name="message"
+						required
+						rows="2"
+						placeholder="Ваше повідомлення..."
+						data-placeholder-uk="Ваше повідомлення..."
+						data-placeholder-en="Your message..."
+					></textarea>
+				</label>
+			</div>
+			<button
+				type="submit"
+				data-uk="НАДІСЛАТИ"
+				data-en="SEND MESSAGE"
+			>
+				НАДІСЛАТИ
+			</button>
+		</form>
+	</div>
+</section>
+
+<footer class="site-footer">
+	<p data-uk="© 2026 ОЛЕКСАНДРА ГЛУЩЕНКО. Всі права захищені."
+		data-en="© 2026 ALEXANDRA HLUSHCHENKO. All rights reserved.">
+		© 2026 ОЛЕКСАНДРА ГЛУЩЕНКО. Всі права захищені.
+	</p>
+	<a href="https://www.instagram.com/a.h.mystery.art?stkn=cTEzYWI0YzFvZGtl" target="_blank" rel="noopener noreferrer">
+		<span data-uk="Instagram:" data-en="Instagram:">Instagram:</span> @a.m.mystery.art
+	</a>
+</footer>
+
+<script>
+	const contactForm = document.querySelector<HTMLFormElement>("#contact-form");
+
+	if (contactForm) {
+		const nameInput = contactForm.querySelector<HTMLInputElement>('input[name="name"]');
+		const replyToInput = contactForm.querySelector<HTMLInputElement>('input[name="replyTo"]');
+		const messageInput = contactForm.querySelector<HTMLTextAreaElement>('textarea[name="message"]');
+
+		if (!nameInput || !replyToInput || !messageInput) {
+			throw new Error("Contact form fields are missing.");
+		}
+
+		const nameField = nameInput;
+		const replyToField = replyToInput;
+		const messageField = messageInput;
+		const storageKey = "artist-portfolio-contact-draft";
+		let storageAvailable = true;
+
+		function persistContactValues() {
+			if (!storageAvailable) return false;
+
+			try {
+				const contactValues: Record<string, string> = {};
+				contactValues["name"] = nameField.value;
+				contactValues["replyTo"] = replyToField.value;
+				contactValues["message"] = messageField.value;
+				localStorage.setItem(storageKey, JSON.stringify(contactValues));
+				return true;
+			} catch (error) {
+				storageAvailable = false;
+				console.error("Unable to save contact form values in this browser.", error);
+				return false;
+			}
+		}
+
+		try {
+			const savedValues = localStorage.getItem(storageKey);
+			if (savedValues) {
+				const parsed: unknown = JSON.parse(savedValues);
+				if (
+					typeof parsed === "object"
+					&& parsed !== null
+					&& "name" in parsed
+					&& "replyTo" in parsed
+					&& "message" in parsed
+					&& typeof parsed.name === "string"
+					&& typeof parsed.replyTo === "string"
+					&& typeof parsed.message === "string"
+				) {
+					nameField.value = parsed.name;
+					replyToField.value = parsed.replyTo;
+					messageField.value = parsed.message;
+				} else {
+					throw new Error("Saved contact form values have an invalid format.");
+				}
+			}
+		} catch (error) {
+			console.error("Unable to restore saved contact form values.", error);
+		}
+
+		contactForm.addEventListener("input", persistContactValues);
+		contactForm.addEventListener("submit", (event) => {
+			event.preventDefault();
+			const saved = persistContactValues();
+			const isEnglish = document.documentElement.lang === "en";
+			window.alert(saved
+				? isEnglish
+					? "Thank you! Your message has been saved in this browser."
+					: "Дякуємо! Ваше повідомлення збережено в цьому браузері."
+				: isEnglish
+					? "Your message could not be saved in this browser. Please try again."
+					: "Не вдалося зберегти повідомлення в цьому браузері. Спробуйте ще раз.");
+		});
+	}
+</script>
+
+<style>
+	.contacts-section,
+	.site-footer {
+		width: min(100% - 64px, 1120px);
+		margin: 0 auto;
+		font-family: "Inter", Arial, sans-serif;
+	}
+
+	.contacts-section {
+		padding: 30px 0 20px;
+		border-top: 1px solid #e6e6e6;
+		scroll-margin-top: 24px;
+	}
+
+	.contacts-heading {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 16px;
+		margin-bottom: 20px;
+	}
+
+	.contacts-heading h2 {
+		margin: 0;
+		font-family: "Lora", Georgia, serif;
+		font-size: 26px;
+		font-weight: 400;
+		line-height: 1.3;
+	}
+
+	.contacts-heading p {
+		margin: 0;
+		color: #777;
+		font-size: 7px;
+		letter-spacing: 0.06em;
+	}
+
+	.contacts-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		gap: 36px;
+	}
+
+	.artist-contact h3 {
+		margin: 0 0 6px;
+		font-family: "Lora", Georgia, serif;
+		font-size: 17px;
+		font-weight: 400;
+	}
+
+	.artist-description {
+		max-width: 430px;
+		margin: 0;
+		color: #6e6e6e;
+		font-size: 9px;
+		line-height: 1.6;
+	}
+
+	.contact-details {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		gap: 14px 18px;
+		margin: 20px 0 0;
+	}
+
+	.contact-details > div {
+		min-width: 0;
+	}
+
+	.contact-details dt {
+		margin-bottom: 5px;
+		color: #777;
+		font-size: 7px;
+		letter-spacing: 0.06em;
+	}
+
+	.contact-details dd {
+		margin: 0;
+		font-size: 9px;
+		overflow-wrap: anywhere;
+	}
+
+	.contacts-section a,
+	.site-footer a {
+		position: relative;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.contacts-section a::after,
+	.site-footer a::after {
+		position: absolute;
+		right: 0;
+		bottom: -3px;
+		left: 0;
+		height: 1px;
+		background: currentColor;
+		content: "";
+		opacity: 0.45;
+		transform: scaleX(0);
+		transform-origin: left center;
+		transition: transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1), opacity 320ms ease;
+	}
+
+	.contacts-section a:hover::after,
+	.contacts-section a:focus-visible::after,
+	.site-footer a:hover::after,
+	.site-footer a:focus-visible::after {
+		opacity: 0.75;
+		transform: scaleX(1);
+	}
+
+	.contact-form {
+		display: flex;
+		align-items: flex-start;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	.form-fields {
+		display: grid;
+		width: 100%;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 8px;
+	}
+
+	.form-fields label {
+		display: block;
+		min-width: 0;
+	}
+
+	.form-fields input,
+	.form-fields textarea {
+		display: block;
+		width: 100%;
+		box-sizing: border-box;
+		padding: 8px 9px;
+		border: 1px solid #e6e6e6;
+		border-radius: 0;
+		background: #fff;
+		color: #111111;
+		font: inherit;
+		font-size: 8px;
+	}
+
+	.form-fields input {
+		height: 32px;
+	}
+
+	.form-fields textarea {
+		min-height: 32px;
+		resize: vertical;
+	}
+
+	.form-fields input::placeholder,
+	.form-fields textarea::placeholder {
+		color: #929292;
+		opacity: 1;
+	}
+
+	.form-fields input:focus,
+	.form-fields textarea:focus {
+		border-color: #888;
+		outline: 1px solid #888;
+		outline-offset: 1px;
+	}
+
+	.message-field {
+		grid-column: 1 / -1;
+	}
+
+	.contact-form button {
+		min-width: 80px;
+		padding: 9px 18px;
+		border: 1px solid #111111;
+		background: #111111;
+		color: #fff;
+		font: inherit;
+		font-size: 7px;
+		letter-spacing: 0.04em;
+		cursor: pointer;
+		transition: background-color 200ms ease, color 200ms ease;
+	}
+
+	.contact-form button:hover,
+	.contact-form button:focus-visible {
+		background: #fff;
+		color: #111111;
+	}
+
+	.site-footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		padding: 12px 0 22px;
+		border-top: 1px solid #e6e6e6;
+		color: #777;
+		font-size: 7px;
+	}
+
+	.site-footer p {
+		margin: 0;
+	}
+
+	.site-footer a {
+		white-space: nowrap;
+	}
+
+	.visually-hidden {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	@media (max-width: 700px) {
+		.contacts-section,
+		.site-footer {
+			width: calc(100% - 40px);
+		}
+
+		.contacts-section {
+			padding: 26px 0 18px;
+		}
+
+		.contacts-grid {
+			grid-template-columns: 1fr;
+			gap: 24px;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.contacts-section,
+		.site-footer {
+			width: calc(100% - 32px);
+		}
+
+		.contacts-heading {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 8px;
+		}
+
+		.contact-details {
+			gap: 12px 10px;
+		}
+
+		.site-footer {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 8px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.contacts-section a::after,
+		.site-footer a::after,
+		.contact-form button {
+			transition: none;
+		}
+	}
+</style>

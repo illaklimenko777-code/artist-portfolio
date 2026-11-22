@@ -1,0 +1,329 @@
+---
+import projectOne from "../../assets/img/banner-project-1.png";
+import projectTwo from "../../assets/img/banner-project-2.png";
+import projectThree from "../../assets/img/banner-project-3.png";
+import ProjectArtworkCard from "../card-artwork/Project-artwork-card.astro";
+
+const projects = [
+	{
+		image: projectOne,
+		category: "series",
+		altUk: "Скульптурні об’єкти серії EXUVIAE",
+		altEn: "Sculptural objects from the EXUVIAE series",
+		typeUk: "АВТОРСЬКИЙ ПРОЄКТ · 2026",
+		typeEn: "ART PROJECT · 2026",
+		titleUk: "«EXUVIAE»",
+		titleEn: "“EXUVIAE”",
+		descriptionUk: "Проєкт про внутрішню трансформацію та становлення.",
+		descriptionEn: "A project about inner transformation and becoming.",
+	},
+	{
+		image: projectTwo,
+		category: "objects",
+		altUk: "Скульптурна інсталяція серії EXUVIAE",
+		altEn: "Sculptural installation from the EXUVIAE series",
+		typeUk: "ОБ’ЄКТ · 2026",
+		typeEn: "OBJECT · 2026",
+		titleUk: "Акт сепарації",
+		titleEn: "Act of separation",
+		descriptionUk: "Відбиток автопортрету мисткині.",
+		descriptionEn: "An imprint of the artist’s self-portrait.",
+	},
+	{
+		image: projectThree,
+		category: "objects",
+		altUk: "Підвісний скульптурний об’єкт EXUVIAE",
+		altEn: "Suspended sculptural object from EXUVIAE",
+		typeUk: "ОБ’ЄКТ · 2026",
+		typeEn: "OBJECT · 2026",
+		titleUk: "Ментальна оболонка",
+		titleEn: "Mental shell",
+		descriptionUk: "Епоксидна смола, пігменти, спрямоване світло.",
+		descriptionEn: "Epoxy resin, pigments, directed light.",
+	},
+];
+---
+
+<section class="project-section" id="projects">
+	<div class="projects-heading">
+		<h2 data-uk="Проєкти" data-en="Projects">Проєкти</h2>
+		<p data-uk="03 / ВИБРАНІ ПРОЄКТИ" data-en="03 / SELECTED PROJECTS">03 / ВИБРАНІ ПРОЄКТИ</p>
+	</div>
+
+	<div
+		class="project-filters"
+		role="group"
+		aria-label="Фільтри проєктів"
+		data-aria-uk="Фільтри проєктів"
+		data-aria-en="Project filters"
+	>
+		<button class="project-filter" type="button" data-filter="all" aria-pressed="true">
+			<span data-uk="УСІ" data-en="ALL">УСІ</span>
+		</button>
+		<button class="project-filter" type="button" data-filter="series" aria-pressed="false">
+			<span data-uk="СЕРІЯ" data-en="SERIES">СЕРІЯ</span>
+		</button>
+		<button class="project-filter" type="button" data-filter="objects" aria-pressed="false">
+			<span data-uk="ОБ’ЄКТИ" data-en="OBJECTS">ОБ’ЄКТИ</span>
+		</button>
+	</div>
+
+	<div class="project-grid">
+		{projects.map((project, index) => (
+			<article class="project-card" data-category={project.category} data-project-index={index}>
+				<div class="project-image" role="button" tabindex="0" aria-label={project.altUk}>
+					<img
+						src={project.image.src}
+						alt={project.altUk}
+						data-alt-uk={project.altUk}
+						data-alt-en={project.altEn}
+						width={project.image.width}
+						height={project.image.height}
+						loading="lazy"
+					/>
+				</div>
+				<div class="project-card-heading">
+					<div>
+						<p class="project-type" data-uk={project.typeUk} data-en={project.typeEn}>{project.typeUk}</p>
+						<h3 data-uk={project.titleUk} data-en={project.titleEn}>{project.titleUk}</h3>
+					</div>
+					<span class="project-arrow" aria-hidden="true">&rarr;</span>
+				</div>
+				<p class="project-description" data-uk={project.descriptionUk} data-en={project.descriptionEn}>
+					{project.descriptionUk}
+				</p>
+			</article>
+		))}
+	</div>
+</section>
+<ProjectArtworkCard />
+
+<script>
+	const projectSection = document.querySelector<HTMLElement>("#projects");
+
+	if (projectSection) {
+		const filterButtons = projectSection.querySelectorAll<HTMLButtonElement>(".project-filter");
+		const projectCards = projectSection.querySelectorAll<HTMLElement>(".project-card");
+
+		function openProject(imageFrame: HTMLElement) {
+			const card = imageFrame.closest<HTMLElement>(".project-card");
+			if (!card) return;
+
+			window.dispatchEvent(new CustomEvent("project-artwork-open", {
+				detail: { index: Number(card.dataset.projectIndex) },
+			}));
+		}
+
+		projectSection.querySelectorAll<HTMLElement>(".project-image").forEach((imageFrame) => {
+			imageFrame.addEventListener("click", () => openProject(imageFrame));
+			imageFrame.addEventListener("keydown", (event) => {
+				if (event.key === "Enter" || event.key === " ") {
+					event.preventDefault();
+					openProject(imageFrame);
+				}
+			});
+		});
+
+		filterButtons.forEach((button) => {
+			button.addEventListener("click", () => {
+				const filter = button.dataset.filter;
+				if (!filter) return;
+
+				filterButtons.forEach((filterButton) => {
+					filterButton.setAttribute("aria-pressed", String(filterButton === button));
+				});
+
+				projectCards.forEach((card) => {
+					card.hidden = filter !== "all" && card.dataset.category !== filter;
+				});
+			});
+		});
+	}
+</script>
+
+<style>
+	.project-section {
+		padding: 22px 0 64px;
+		border-top: 1px solid #e6e6e6;
+		scroll-margin-top: 90px;
+	}
+
+	.projects-heading {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 16px;
+		margin-bottom: 12px;
+		padding-bottom: 12px;
+		border-bottom: 1px solid #e6e6e6;
+	}
+
+	.projects-heading h2 {
+		margin: 0;
+		font-family: "Lora", Georgia, serif;
+		font-size: 26px;
+		font-weight: 400;
+		line-height: 1.3;
+	}
+
+	.projects-heading p {
+		margin: 0;
+		color: #6e6e6e;
+		font-size: 8px;
+		letter-spacing: 0.04em;
+	}
+
+	.project-filters {
+		display: flex;
+		gap: 18px;
+		margin-bottom: 14px;
+	}
+
+	.project-filter {
+		position: relative;
+		padding: 0 0 5px;
+		border: 0;
+		background: transparent;
+		color: #6e6e6e;
+		font: inherit;
+		font-family: "Inter", Arial, sans-serif;
+		font-size: 12px;
+		text-transform: uppercase;
+		letter-spacing: 0.15em;
+		cursor: pointer;
+	}
+
+	.project-filter[aria-pressed="true"] {
+		color: #111111;
+	}
+
+	.project-filter[aria-pressed="true"]::after {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		height: 1px;
+		background: currentColor;
+		content: "";
+	}
+
+	.project-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 16px;
+	}
+
+	.project-card {
+		min-width: 0;
+		cursor: pointer;
+	}
+
+	.project-image {
+		position: relative;
+		aspect-ratio: 0.78;
+		margin-bottom: 10px;
+		padding: 7px;
+		background: #ffffff;
+	}
+
+	.project-image img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 180ms ease, outline-color 180ms ease;
+		outline: 1px solid transparent;
+		outline-offset: 10px;
+	}
+
+	@media (hover: hover) {
+		.project-card:hover .project-image img,
+		.project-card:focus-within .project-image img {
+			outline-color: #111111;
+			transform: scale(1.015);
+		}
+	}
+
+	.project-card-heading {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 8px;
+	}
+
+	.project-type {
+		margin: 0 0 4px;
+		color: #6e6e6e;
+		font-size: 7px;
+		letter-spacing: 0.05em;
+	}
+
+	.project-card h3 {
+		margin: 0;
+		font-family: "Lora", Georgia, serif;
+		font-size: 17px;
+		font-weight: 400;
+		line-height: 1.3;
+	}
+
+	.project-arrow {
+		flex: none;
+		opacity: 0;
+		transform: translateX(-4px);
+		transition: opacity 180ms ease, transform 180ms ease;
+	}
+
+	.project-card:hover .project-arrow,
+	.project-card:focus-within .project-arrow {
+		opacity: 1;
+		transform: translateX(0);
+	}
+
+	.project-description {
+		margin: 4px 0 0;
+		color: #6e6e6e;
+		font-family: "Inter", Arial, sans-serif;
+		font-size: 14px;
+		line-height: 1.85;
+		letter-spacing: 0.02em;
+	}
+
+	@media (max-width: 700px) {
+		.project-section {
+			padding: 20px 0 48px;
+		}
+
+		.projects-heading h2 {
+			font-size: 21px;
+		}
+
+		.project-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 20px 12px;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.projects-heading {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 8px;
+		}
+
+		.project-grid {
+			grid-template-columns: 1fr;
+			gap: 24px;
+		}
+
+		.project-image {
+			aspect-ratio: 0.95;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.project-image img,
+		.project-arrow {
+			transition: none;
+		}
+	}
+</style>

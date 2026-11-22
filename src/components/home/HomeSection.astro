@@ -1,0 +1,467 @@
+---
+import artworkOne from "../../assets/img/banner-card-1.png";
+import artworkTwo from "../../assets/img/banner-card-2.png";
+import artworkThree from "../../assets/img/banner-card-3.jpg";
+import artworkFour from "../../assets/img/banner-card-4.jpg";
+import womanArtwork from "../../assets/img/woman-card.png";
+import thumbnailOne from "../../assets/img/banner-mini-1.png";
+import thumbnailTwo from "../../assets/img/banner-mini-2.png";
+import thumbnailThree from "../../assets/img/banner-mini-3.png";
+import thumbnailFour from "../../assets/img/banner-mini-4.png";
+import womanThumbnail from "../../assets/img/banner-mini-woman.png";
+import HomeArtworkCard from "../card-artwork/Home-Work-artworks-card.astro";
+
+const artworks = [
+	{
+		image: artworkOne,
+		thumbnail: thumbnailOne,
+		altUk: "Підвісна скульптура з металу у світлому просторі",
+		altEn: "Suspended metal sculpture in a light space",
+		titleUk: "«Екзувій: Страх, що нічого не вийде» (2026)",
+		titleEn: "“Exuvia: The fear that nothing will work out” (2026)",
+		descriptionUk: "Серія «EXUVIA» · Епоксидна смола, поталь, пігменти, текстурні пасти, емаль · 30 × 20 см",
+		descriptionEn: "“EXUVIA” series · Epoxy resin, metal leaf, pigments, texture paste, enamel · 30 × 20 cm",
+	},
+	{
+		image: artworkTwo,
+		thumbnail: thumbnailTwo,
+		altUk: "Скульптура з металу на темному тлі",
+		altEn: "Metal sculpture against a dark background",
+		titleUk: "Серія «EXUVIAE» — Акт сепарації",
+		titleEn: "“EXUVIAE” series — Act of separation",
+		descriptionUk: "Відбиток автопортрету митця • 2026",
+		descriptionEn: "Artist's self-portrait imprint • 2026",
+	},
+	{
+		image: artworkThree,
+		thumbnail: thumbnailThree,
+		altUk: "Скульптурний портрет із жовтим і блакитним світлом",
+		altEn: "Sculptural portrait lit in yellow and blue",
+		titleUk: "Серія «EXUVIAE» — Ментальна оболонка",
+		titleEn: "“EXUVIAE” series — Mental shell",
+		descriptionUk: "Епоксидна смола, пігменти, спрямоване світло • 2026",
+		descriptionEn: "Epoxy resin, pigments, directed light • 2026",
+	},
+	{
+		image: artworkFour,
+		thumbnail: thumbnailFour,
+		altUk: "Скульптурний портрет у жовтому світлі",
+		altEn: "Sculptural portrait in yellow light",
+		titleUk: "Серія «EXUVIAE» — Проявлення суті",
+		titleEn: "“EXUVIAE” series — Revealing the essence",
+		descriptionUk: "Авторська техніка, 30 × 20 см • 2026",
+		descriptionEn: "Original technique, 30 × 20 cm • 2026",
+	},
+	{
+		image: womanArtwork,
+		thumbnail: womanThumbnail,
+		altUk: "Портрет художниці зі скульптурною прикрасою",
+		altEn: "Portrait of the artist wearing a sculptural piece",
+		titleUk: "Олександра Глущенко з роботою серії «EXUVIAE»",
+		titleEn: "Alexandra Hlushchenko with a work from the “EXUVIAE” series",
+		descriptionUk: "Простір трансгресії та ритуал трансформації • 2026",
+		descriptionEn: "Space of transgression and ritual of transformation • 2026",
+	},
+];
+
+const initialIndex = 0;
+const initialArtwork = artworks[initialIndex];
+const visibleSlides = [-1, 0, 1].map((offset) => {
+	const index = (initialIndex + offset + artworks.length) % artworks.length;
+	return { artwork: artworks[index], index, position: offset === 0 ? "center" : offset === -1 ? "left" : "right" };
+});
+---
+
+<section class="works-section" id="works">
+	<div class="works-gallery" aria-label="Галерея робіт">
+		{
+			visibleSlides.map(({ artwork, index, position }) => (
+				<button class:list={["artwork", `artwork-${position}`]} type="button" data-slide={position} data-index={index}>
+					<img src={artwork.image.src} alt={artwork.altUk} data-alt-uk={artwork.altUk} data-alt-en={artwork.altEn} />
+				</button>
+			))
+		}
+	</div>
+
+	<div class="works-footer">
+		<div class="work-caption">
+			<p class="work-title" data-uk={initialArtwork.titleUk} data-en={initialArtwork.titleEn}>
+				{initialArtwork.titleUk}
+			</p>
+			<p class="work-description" data-uk={initialArtwork.descriptionUk} data-en={initialArtwork.descriptionEn}>
+				{initialArtwork.descriptionUk}
+			</p>
+		</div>
+
+		<div class="gallery-controls">
+			<div class="work-thumbnails" aria-label="Вибрати роботу" data-aria-uk="Вибрати роботу" data-aria-en="Choose artwork">
+				{
+					artworks.map((artwork, index) => (
+						<button
+							class="thumbnail"
+							type="button"
+							data-index={index}
+							data-image-src={artwork.image.src}
+							data-alt-uk={artwork.altUk}
+							data-alt-en={artwork.altEn}
+							data-title-uk={artwork.titleUk}
+							data-title-en={artwork.titleEn}
+							data-description-uk={artwork.descriptionUk}
+							data-description-en={artwork.descriptionEn}
+							aria-label={`Робота ${index + 1}`}
+							data-aria-uk={`Робота ${index + 1}`}
+							data-aria-en={`Artwork ${index + 1}`}
+							aria-current={index === initialIndex ? "true" : undefined}
+						>
+							<img src={artwork.thumbnail.src} alt="" />
+						</button>
+					))
+				}
+			</div>
+
+			<div class="gallery-pagination">
+				<button class="gallery-arrow" type="button" data-direction="-1" aria-label="Попередня робота" data-aria-uk="Попередня робота" data-aria-en="Previous artwork">
+					<span aria-hidden="true">&larr;</span>
+				</button>
+				<span class="gallery-count" aria-live="polite">01 / 05</span>
+				<button class="gallery-arrow" type="button" data-direction="1" aria-label="Наступна робота" data-aria-uk="Наступна робота" data-aria-en="Next artwork">
+					<span aria-hidden="true">&rarr;</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</section>
+<HomeArtworkCard />
+
+<script>
+	const gallery = document.querySelector<HTMLElement>(".works-section");
+
+	function initializeGallery(gallery: HTMLElement) {
+		const slideButtons = gallery.querySelectorAll<HTMLButtonElement>(".artwork");
+		const thumbnailButtons = gallery.querySelectorAll<HTMLButtonElement>(".thumbnail");
+		const count = gallery.querySelector<HTMLElement>(".gallery-count");
+		const title = gallery.querySelector<HTMLElement>(".work-title");
+		const description = gallery.querySelector<HTMLElement>(".work-description");
+		if (!count) return;
+
+		const total = thumbnailButtons.length;
+		let activeIndex = 0;
+
+		function renderGallery() {
+			const activeThumbnail = Array.from(thumbnailButtons).find(
+				(item) => Number(item.dataset.index) === activeIndex,
+			);
+
+			slideButtons.forEach((button) => {
+				const offset = button.dataset.slide === "left" ? -1 : button.dataset.slide === "right" ? 1 : 0;
+				const index = (activeIndex + offset + total) % total;
+				const thumbnail = Array.from(thumbnailButtons).find((item) => Number(item.dataset.index) === index);
+				const image = button.querySelector("img");
+				if (!thumbnail || !image) return;
+
+				button.dataset.index = String(index);
+				image.src = thumbnail.dataset.imageSrc ?? "";
+				const language = document.documentElement.lang === "en" ? "en" : "uk";
+				image.alt = thumbnail.dataset[`alt${language === "en" ? "En" : "Uk"}`] ?? "";
+			});
+
+			thumbnailButtons.forEach((button) => {
+				if (Number(button.dataset.index) === activeIndex) {
+					button.setAttribute("aria-current", "true");
+				} else {
+					button.removeAttribute("aria-current");
+				}
+			});
+
+			if (activeThumbnail && title && description) {
+				title.dataset.uk = activeThumbnail.dataset.titleUk ?? "";
+				title.dataset.en = activeThumbnail.dataset.titleEn ?? "";
+				description.dataset.uk = activeThumbnail.dataset.descriptionUk ?? "";
+				description.dataset.en = activeThumbnail.dataset.descriptionEn ?? "";
+
+				const language = document.documentElement.lang === "en" ? "en" : "uk";
+				title.textContent = title.dataset[language] ?? "";
+				description.textContent = description.dataset[language] ?? "";
+			}
+
+			if (count) {
+				count.textContent = `${String(activeIndex + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
+			}
+		}
+
+		function showArtwork(index: number) {
+			activeIndex = (index + total) % total;
+			renderGallery();
+		}
+
+		slideButtons.forEach((button) => {
+			button.addEventListener("click", () => {
+				const index = Number(button.dataset.index);
+				showArtwork(index);
+				window.dispatchEvent(new CustomEvent("home-artwork-open", {
+					detail: { index },
+				}));
+			});
+		});
+
+		thumbnailButtons.forEach((button) => {
+			button.addEventListener("click", () => {
+				const index = Number(button.dataset.index);
+				showArtwork(index);
+				window.dispatchEvent(new CustomEvent("home-artwork-open", {
+					detail: { index },
+				}));
+			});
+		});
+
+		gallery.querySelectorAll<HTMLButtonElement>(".gallery-arrow").forEach((button) => {
+			button.addEventListener("click", () => {
+				showArtwork(activeIndex + Number(button.dataset.direction));
+			});
+		});
+
+		let touchStartX: number | null = null;
+		gallery.addEventListener("touchstart", (event) => {
+			touchStartX = event.changedTouches[0]?.clientX ?? null;
+		}, { passive: true });
+
+		gallery.addEventListener("touchend", (event) => {
+			if (touchStartX === null) return;
+
+			const touchEndX = event.changedTouches[0]?.clientX;
+			if (touchEndX !== undefined && Math.abs(touchEndX - touchStartX) > 40) {
+				showArtwork(activeIndex + (touchEndX < touchStartX ? 1 : -1));
+			}
+
+			touchStartX = null;
+		}, { passive: true });
+
+		renderGallery();
+	}
+
+	if (gallery) initializeGallery(gallery);
+</script>
+
+<style>
+	.works-section {
+		padding: 28px 0 64px;
+	}
+
+	.works-gallery {
+		display: grid;
+		height: clamp(280px, 38vw, 450px);
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr) minmax(0, 1fr);
+		align-items: center;
+		gap: clamp(8px, 1.2vw, 14px);
+	}
+
+	.artwork {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 86%;
+		min-width: 0;
+		padding: 0;
+		overflow: hidden;
+		border: 0;
+		background: #ffffff;
+		cursor: pointer;
+		filter: grayscale(0.45);
+		transition: filter 240ms ease, transform 240ms ease;
+	}
+
+	.artwork img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
+	}
+
+	.artwork-center {
+		z-index: 1;
+		height: 100%;
+		filter: none;
+	}
+
+	.artwork-left,
+	.artwork-right {
+		opacity: 0.45;
+		filter: brightness(1.15);
+	}
+
+	.artwork:hover,
+	.artwork:focus-visible {
+		z-index: 2;
+		opacity: 1;
+		filter: none;
+		transform: scale(1.05);
+	}
+
+	.artwork-center:hover,
+	.artwork-center:focus-visible {
+		transform: scale(1.025);
+	}
+
+	.works-footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		margin-top: 12px;
+		padding-bottom: 22px;
+		border-bottom: 1px solid #e6e6e6;
+	}
+
+	.work-caption {
+		min-width: 0;
+	}
+
+	.work-title,
+	.work-description {
+		margin: 0;
+	}
+
+	.work-title {
+		font-family: "Lora", Georgia, serif;
+		font-size: 14px;
+		font-style: italic;
+	}
+
+	.work-description {
+		margin-top: 4px;
+		color: #6e6e6e;
+		font-size: 9px;
+	}
+
+	.gallery-controls {
+		display: flex;
+		align-items: center;
+		gap: 18px;
+	}
+
+	.work-thumbnails,
+	.gallery-pagination {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+	}
+
+	.thumbnail,
+	.gallery-arrow {
+		display: grid;
+		width: 38px;
+		height: 38px;
+		place-items: center;
+		padding: 3px;
+		border: 1px solid transparent;
+		background: transparent;
+		cursor: pointer;
+	}
+
+	.thumbnail {
+		box-sizing: border-box;
+		width: 38px;
+		height: 38px;
+		padding: 0;
+		border: 0;
+	}
+
+	.thumbnail img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.gallery-pagination {
+		gap: 12px;
+		font-family: "Inter", Arial, sans-serif;
+		font-size: 10px;
+	}
+
+	.gallery-arrow {
+		border-color: #e6e6e6;
+		font-size: 16px;
+	}
+
+	.gallery-arrow:hover,
+	.gallery-arrow:focus-visible {
+		border-color: #111111;
+		background: #111111;
+		color: #fff;
+	}
+
+	.thumbnail[aria-current="true"] img,
+	.thumbnail:hover img,
+	.thumbnail:focus-visible img {
+		outline: 1px solid #111111;
+		outline-offset: -1px;
+	}
+
+	@media (max-width: 700px) {
+		.works-gallery {
+			display: block;
+			height: auto;
+			aspect-ratio: 0.73;
+		}
+
+		.artwork {
+			display: none;
+		}
+
+		.artwork-center {
+			display: block;
+			width: 100%;
+			height: 100%;
+			opacity: 1;
+			transform: none;
+		}
+
+		.artwork-center:hover,
+		.artwork-center:focus-visible {
+			transform: none;
+		}
+
+		.works-footer {
+			flex-wrap: wrap;
+			align-items: flex-start;
+			gap: 12px;
+		}
+
+		.gallery-controls {
+			width: 100%;
+			justify-content: flex-start;
+		}
+
+		.work-thumbnails {
+			display: none;
+		}
+
+		.gallery-pagination {
+			gap: 8px;
+		}
+
+		.work-description {
+			font-size: 8px;
+		}
+
+		.gallery-arrow {
+			width: 32px;
+			height: 32px;
+		}
+	}
+
+	@media (max-width: 420px) {
+		.works-section {
+			padding-top: 22px;
+		}
+
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.artwork {
+			transition: none;
+		}
+	}
+</style>
